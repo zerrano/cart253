@@ -6,7 +6,6 @@
 // in the middle of the canvas.
 
 
-
 // The current position and size of the circle
 let circleX;
 let circleY;
@@ -17,8 +16,12 @@ let squareX;
 let squareY;
 let squareSize = 100;
 
-//attemptted to add text
-let tim = "tim is awesome";
+// Shrek's attributes
+let shrekpng;
+let shrekXPosition = 0;
+let shrekYPosition = 0;
+let shrekWidth = 100;
+let shrekHeight = 100;
 
 
 //**new shape
@@ -32,10 +35,13 @@ let circle2Y;
 let circle2Size = 100;
 // preload()
 //
-// Nothing here
+
+// Abstract function to be overriden; should return the type.
+
+// pre-loading shrek
 
 function preload() {
-
+  shrek = loadImage('./assets/images/shrek.png');
 }
 
 
@@ -46,6 +52,9 @@ function preload() {
 function setup() {
   // Create our canvas
   createCanvas(640,640);
+  image(shrek, 0, 0)
+  //shrek will spawn at mouse cursor location
+  displayImgAtMouse(shrek, 120, 120);
   // Start the circle off screen to the bottom left
   // We divide the size by two because we're drawing from the center
   circleX = -circleSize/2;

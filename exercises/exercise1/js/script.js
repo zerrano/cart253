@@ -86,5 +86,4 @@ function draw() {
   shrek2X -= 0.7;
   shrek2Y -= 0.7;
   image (shrek2, shrek2X, shrek2Y, shrek2Size, shrek2Size);
-
 }

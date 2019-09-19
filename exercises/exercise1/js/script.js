@@ -39,8 +39,8 @@ let tim="tim is sexy";
 // pre-loading shrek
 
 function preload() {
-  shrek = loadImage('../assets/images/shrek.png');
-  shrek2 = loadImage('../assets/images/shrek.jpg');
+  shrek = loadImage('assets/images/shrek.png');
+  shrek2 = loadImage('assets/images/shrek.jpg');
 }
 
 

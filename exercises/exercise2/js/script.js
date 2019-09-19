@@ -29,6 +29,12 @@ let enemyVX = 5;
 // How many dodges the player has made
 let dodges = 0;
 
+//setting up the message that displays when you get height
+let hit = "HIT!";
+
+//death counter
+let counter = 0;
+
 // setup()
 //
 // Make the canvas, position the avatar and anemy
@@ -55,6 +61,7 @@ function setup() {
 function draw() {
   // A pink background
   background(255,220,220);
+
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
@@ -94,7 +101,11 @@ function draw() {
   // and the centre of the avatar is less that their combined radii
   if (dist(enemyX,enemyY,avatarX,avatarY) < enemySize/2 + avatarSize/2) {
     // Tell the player they lost
-    console.log("YOU LOSE!");
+    fill(0);
+    textSize(40);
+    textAlign(CENTER);
+    text(hit+(deltaTime+30), 250, 50);
+
     // Reset the enemy's position
     enemyX = 0;
     enemyY = random(0,height);
@@ -104,7 +115,9 @@ function draw() {
     // Reset the dodge counter
     dodges = 0;
   }
-
+  else {
+    text(hit, 250, 50);
+  }
   // Check if the avatar has gone off the screen (cheating!)
   if (avatarX < 0 || avatarX > width || avatarY < 0 || avatarY > height) {
     // If they went off the screen they lose in the same way as above.

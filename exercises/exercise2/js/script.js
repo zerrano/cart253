@@ -20,18 +20,22 @@ let avatarVY = 0;
 // The position and size of the enemy circle
 let enemyX;
 let enemyY;
-let enemySize = 50;
+let enemySize = 70;
 
 // The speed and velocity of our enemy circle
 let enemySpeed = 5;
 let enemyVX = 5;
 
+//shows total amount of dodges
+let dodgesScore;
 // How many dodges the player has made
 let dodges = 0;
 
 //setting up the message that displays when you get height
 let hit = "HIT!";
 
+//background image
+let bgimg;
 //death counter
 let counter = 0;
 
@@ -40,8 +44,9 @@ let counter = 0;
 // Make the canvas, position the avatar and anemy
 function setup() {
   // Create our playing area
-  createCanvas(500,500);
-
+  createCanvas(800,500);
+  imageMode(CENTER);
+  bgimg=loadImage("assets/images/background.jpg");
   // Put the avatar in the centre
   avatarX = width/2;
   avatarY = height/2;
@@ -60,8 +65,7 @@ function setup() {
 // game over situations.
 function draw() {
   // A pink background
-  background(255,220,220);
-
+  image(bgimg, 400,250);
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
@@ -100,12 +104,6 @@ function draw() {
   // We do this by checking if the distance between the centre of the enemy
   // and the centre of the avatar is less that their combined radii
   if (dist(enemyX,enemyY,avatarX,avatarY) < enemySize/2 + avatarSize/2) {
-    // Tell the player they lost
-    fill(0);
-    textSize(40);
-    textAlign(CENTER);
-    text(hit+(deltaTime+30), 250, 50);
-
     // Reset the enemy's position
     enemyX = 0;
     enemyY = random(0,height);
@@ -115,9 +113,7 @@ function draw() {
     // Reset the dodge counter
     dodges = 0;
   }
-  else {
-    text(hit, 250, 50);
-  }
+
   // Check if the avatar has gone off the screen (cheating!)
   if (avatarX < 0 || avatarX > width || avatarY < 0 || avatarY > height) {
     // If they went off the screen they lose in the same way as above.
@@ -140,11 +136,20 @@ function draw() {
     enemyY = random(0,height);
   }
 
+//will display total number of dodges (amount of responsibilities avoided)
+  if(avatarSize> 150 || enemySpeed===0){
+
+      }
+   else{ dodgesScore="Amount of responsibilities you have avoided: " + dodges;}
+      textSize(20);
+      fill(255); //white font
+      text(dodgesScore,20,50);
+
   // Display the number of successful dodges in the console
   console.log(dodges);
 
-  // The player is black
-  fill(0);
+  // The player is white
+  fill(0, 255, 255);
   // Draw the player as a circle
   ellipse(avatarX,avatarY,avatarSize,avatarSize);
 

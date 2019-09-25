@@ -34,8 +34,10 @@ let dodges = 0;
 //setting up the message that displays when you get height
 let hit = "HIT!";
 
-//background image
+//background images
 let bgimg;
+let bgimg2;
+let bgimg3;
 //death counter
 let counter = 0;
 
@@ -47,6 +49,8 @@ function setup() {
   createCanvas(800,500);
   imageMode(CENTER);
   bgimg=loadImage("assets/images/background.jpg");
+  bgimg2=loadImage("assets/images/background0.jpg");
+  bgimg3=loadImage("assets/images/background2.jpeg");
   // Put the avatar in the centre
   avatarX = width/2;
   avatarY = height/2;
@@ -65,7 +69,7 @@ function setup() {
 // game over situations.
 function draw() {
   // A pink background
-  image(bgimg, 400,250);
+  image(bgimg2, 400, 250)
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
@@ -133,15 +137,33 @@ function draw() {
     console.log(dodges + " DODGES!");
     // Reset the enemy's position to the left at a random height
     enemyX = 0;
-    enemyY = random(0,height);
+
+    //changed the spawn location of a successful dodge to make it so the enemy will spawn at the avatar's current Y position.... It will ALWAYS go after you!
+    enemyY = avatarY;
+
+    //Enemy size will increase according to how many successful dodges there are
+    enemySize = 70+dodges*10;
+
+    //enemy speed will multiply according to how many successful dodges there are
+    enemySpeed = 5+dodges;
   }
 
-//will display total number of dodges (amount of responsibilities avoided)
-  if(avatarSize> 150 || enemySpeed===0){
+//background will change if dodge score reachs 5..... or more
+
+  if(dodges>=5){
+    image(bgimg3, 400,250);
+  }
+
+  if(dodges>=10){
+    image(bgimg, 400, 250);
+  }
+
+//will display total number of dodges when the enemy's speed = 0, aka when it resets (amount of responsibilities avoided)
+  if(enemySpeed===0){
 
       }
-   else{ dodgesScore="Amount of responsibilities you have avoided: " + dodges;}
-      textSize(20);
+   else{dodgesScore="# of responsibilities you have avoided: " + dodges;}
+      textSize(15+dodges);
       fill(255); //white font
       text(dodgesScore,20,50);
 

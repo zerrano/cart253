@@ -148,7 +148,7 @@ function draw() {
     enemySpeed = 5+dodges;
   }
 
-//background will change if dodge score reachs 5..... or more
+//background will change if dodge score reachs 5..... or more (if you avoid more than 10, you're going to hell)
 
   if(dodges>=5){
     image(bgimg3, 400,250);

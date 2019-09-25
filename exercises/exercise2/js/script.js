@@ -47,7 +47,7 @@ let bgimg3;
 let counter = 0;
 
 // setup()
-//
+
 // Make the canvas, position the avatar and anemy
 function setup() {
   // Create our playing area

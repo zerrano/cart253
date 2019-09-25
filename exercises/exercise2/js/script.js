@@ -34,6 +34,11 @@ let dodges = 0;
 //setting up the message that displays when you get height
 let hit = "HIT!";
 
+//player avatar
+let student;
+
+//enemy avatar
+let books;
 //background images
 let bgimg;
 let bgimg2;
@@ -51,6 +56,8 @@ function setup() {
   bgimg=loadImage("assets/images/background.jpg");
   bgimg2=loadImage("assets/images/background0.jpg");
   bgimg3=loadImage("assets/images/background2.jpeg");
+  student=loadImage("assets/images/you.png");
+  books=loadImage("assets/images/books.png");
   // Put the avatar in the centre
   avatarX = width/2;
   avatarY = height/2;
@@ -170,14 +177,10 @@ function draw() {
   // Display the number of successful dodges in the console
   console.log(dodges);
 
-  // The player is white
-  fill(0, 255, 255);
-  // Draw the player as a circle
-  ellipse(avatarX,avatarY,avatarSize,avatarSize);
+  // The player is a student
+  image(student,avatarX,avatarY,avatarSize,avatarSize);
 
-  // The enemy is red
-  fill(255,0,0);
-  // Draw the enemy as a circle
-  ellipse(enemyX,enemyY,enemySize,enemySize);
+  // The enemy is are books.... responsibilities
+  image(books,enemyX,enemyY,enemySize,enemySize);
 
 }

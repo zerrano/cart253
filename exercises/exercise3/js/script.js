@@ -28,7 +28,15 @@ let decoyImage7;
 let decoyImage8;
 let decoyImage9;
 let decoyImage10;
-
+//this is the hint!
+let hint;
+//when you find the weiner, these are its speed coordinates
+let speedX = 3;
+let speedY = 3;
+let x = 0.0;
+let y = 0.0;
+let tx = 0.0;
+let ty = 0.0;
 // The number of decoys to show on the screen, randomly
 // chosen from the decoy images
 let numDecoys = 100;
@@ -41,7 +49,7 @@ let gameOver = false;
 // Loads the target and decoy images before the program starts
 function preload() {
   targetImage = loadImage("assets/images/animals-target.png");
-
+  hint = loadImage("assets/images/animals-target.png");
   decoyImage1 = loadImage("assets/images/animals-01.png");
   decoyImage2 = loadImage("assets/images/animals-02.png");
   decoyImage3 = loadImage("assets/images/animals-03.png");
@@ -62,6 +70,8 @@ function setup() {
   createCanvas(windowWidth,windowHeight);
   background("#ffff00");
   imageMode(CENTER);
+  tx = random(0,500);
+  ty = random(0,500);
 
   // Use a for loop to draw as many decoys as we need
   for (let i = 0; i < numDecoys; i++) {
@@ -120,16 +130,19 @@ function setup() {
 // Displays the game over screen if the player has won,
 // otherwise nothing (all the gameplay stuff is in mousePressed())
 function draw() {
+
+
   if (gameOver) {
     // Prepare our typography
+    background(0,255,255);
     textFont("Helvetica");
     textSize(128);
     textAlign(CENTER,CENTER);
     noStroke();
     fill(random(255));
-
+    background(0,255,255);
     // Tell them they won!
-    text("YOU WINNED!",width/2,height/2);
+    text("YOU WONNERED!!!",width/2,height/2);
 
     // Draw a circle around the sausage dog to show where it is (even though
     // they already know because they found it!)
@@ -137,6 +150,19 @@ function draw() {
     stroke(random(255));
     strokeWeight(10);
     ellipse(targetX,targetY,targetImage.width,targetImage.height);
+    x = targetX * noise(tx);
+    y = targetY * noise(ty);
+    tx += 0.05;
+    ty += 0.05;
+    image(targetImage,noise(x),noise(y));
+  }
+
+  else{
+    fill(255);
+    ellipse(windowWidth/2,120,170, 170);
+    image(hint, windowWidth/2, 120);
+    fill(0);
+    text("look for this thing", (windowWidth/2)-45, 80);
   }
 }
 

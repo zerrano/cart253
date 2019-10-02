@@ -39,7 +39,7 @@ let ty;
 // The number of decoys to show on the screen, randomly
 // chosen from the decoy images
 //**Added more decoys
-let numDecoys = 200;
+let numDecoys = 250;
 
 // Keep track of whether they've won
 let gameOver = false;
@@ -85,7 +85,7 @@ function setup() {
     // We'll talk more about this nice quality of random soon enough.
     // But basically each "if" and "else if" has a 10% chance of being true
 
-    //I cut the dimensions of the weiners by half, and added 50 more decoys to make it more challenging
+    //I cut the dimensions of the weiners by half, and added 150 more decoys to make it more challenging
     if (r < 0.1) {
       image(decoyImage1,x,y,decoyImage1.width/2,decoyImage1.height/2);
     }

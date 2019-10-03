@@ -29,7 +29,7 @@ let playerMaxSpeed = 2;
 let playerHealth;
 let playerMaxHealth = 255;
 // Player fill color
-let playerFill = 50;
+let playerFill = 200;
 
 // Prey position, size, velocity
 let preyX;
@@ -42,12 +42,13 @@ let preyMaxSpeed = 4;
 let preyHealth;
 let preyMaxHealth = 100;
 // Prey fill color
-let preyFill = 200;
+let preyFill = 0;
 
 // Amount of health obtained per frame of "eating" (overlapping) the prey
 let eatHealth = 10;
 // Number of prey eaten during the game (the "score")
 let preyEaten = 0;
+
 
 // setup()
 //
@@ -252,8 +253,9 @@ function movePrey() {
 //
 // Draw the prey as an ellipse with alpha based on health
 function drawPrey() {
-  fill(preyFill, preyHealth);
+  fill(preyFill,preyFill+200, preyHealth);
   ellipse(preyX, preyY, preyRadius * 2);
+  ellipse (preyX, preyY, preyRadius * 2.5);
 }
 
 // drawPlayer()
@@ -262,6 +264,7 @@ function drawPrey() {
 function drawPlayer() {
   fill(playerFill, playerHealth);
   ellipse(playerX, playerY, playerRadius * 2);
+  ellipse(playerX, playerY, playerRadius * 2.5);
 }
 
 // showGameOver()

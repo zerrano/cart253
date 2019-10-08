@@ -53,6 +53,7 @@ let preyEaten = 0;
 let noiseX = 0;
 let noiseY = 0;
 
+let instructions = "Press shift to sprint! Eat up all that nasty bacteria, before they kill you!";
 // setup()
 //
 // Sets up the basic elements of the game
@@ -96,8 +97,9 @@ function setupPlayer() {
 // displays the two agents.
 // When the game is over, shows the game over screen.
 function draw() {
-  background(100, 100, 200);
+  background(232, 86, 72, 91);
 
+  text(instructions, 70, 470);
   if (!gameOver) {
     handleInput();
 
@@ -114,6 +116,7 @@ function draw() {
     showGameOver();
   }
 }
+
 
 // handleInput()
 //
@@ -280,6 +283,8 @@ function movePrey() {
   }
 }
 
+
+
 // drawPrey()
 //
 // Draw the prey as an ellipse with alpha based on health
@@ -287,6 +292,17 @@ function drawPrey() {
   fill(preyFill,preyFill+200, preyHealth);
   ellipse(preyX, preyY, preyRadius * 2);
   ellipse (preyX, preyY, preyRadius * 2.5);
+
+//added in a new rule where if you sprint, the enemy will shrink! The enemy will go back to normal size the moment you let go of sprint
+  if (playerMaxSpeed > 2) {
+    preyRadius = preyRadius-0.05;
+    preyRadius = constrain(preyRadius, 8, preyRadius);
+  }
+
+  else if (playerMaxSpeed = 2){
+    preyRadius = preyRadius+0.05;
+    preyRadius = constrain(preyRadius, 25, 25);
+  }
 }
 
 // drawPlayer()
@@ -313,4 +329,6 @@ function showGameOver() {
   gameOverText = gameOverText + "before you died."
   // Display it in the centre of the screen
   text(gameOverText, width / 2, height / 2);
+  fill(232, 86, 72, 91);
+  text(instructions, 70, 600);
 }

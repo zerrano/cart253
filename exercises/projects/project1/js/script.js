@@ -49,6 +49,9 @@ let eatHealth = 10;
 // Number of prey eaten during the game (the "score")
 let preyEaten = 0;
 
+//noise values
+let noiseX = 0;
+let noiseY = 0;
 
 // setup()
 //
@@ -73,6 +76,8 @@ function setupPrey() {
   preyVY = preyMaxSpeed;
   preyHealth = preyMaxHealth;
 }
+
+
 
 // setupPlayer()
 //
@@ -198,7 +203,6 @@ function checkEating() {
     preyHealth = preyHealth - eatHealth;
     // Constrain to the possible range
     preyHealth = constrain(preyHealth, 0, preyMaxHealth);
-
     // Check if the prey died (health 0)
     if (preyHealth === 0) {
       // Move the "new" prey to a random position
@@ -225,13 +229,22 @@ function movePrey() {
     //
     // Use map() to convert from the 0-1 range of the random() function
     // to the appropriate range of velocities for the prey
-    preyVX = map(random(), 0, 1, -preyMaxSpeed, preyMaxSpeed);
-    preyVY = map(random(), 0, 1, -preyMaxSpeed, preyMaxSpeed);
+
+    //rearranged random, to use noise instead
+    preyVX = map(noise(noiseX), 0, 1, -preyMaxSpeed, preyMaxSpeed);
+    preyVY = map(noise(noiseY), 0, 1, -preyMaxSpeed, preyMaxSpeed);
+    noiseX = noiseX + 2;
+    noiseY = noiseY + 3;
   }
 
   // Update prey position based on velocity
-  preyX = preyX + preyVX;
-  preyY = preyY + preyVY;
+
+  //added a noise multiplier
+  preyX = noise(noiseX)+preyX + noise(noiseX)+preyVX;
+  preyY = noise(noiseY)+preyY + noise(noiseY)+preyVY;
+
+  noiseX = noiseX + 0.05;
+  noiseY = noiseY + 0.05;
 
   // Screen wrapping
   if (preyX < 0) {
@@ -265,6 +278,7 @@ function drawPlayer() {
   fill(playerFill, playerHealth);
   ellipse(playerX, playerY, playerRadius * 2);
   ellipse(playerX, playerY, playerRadius * 2.5);
+
 }
 
 // showGameOver()

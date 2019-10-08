@@ -186,9 +186,18 @@ function movePlayer() {
 // Check if the player is dead
 function updateHealth() {
   // Reduce player health
+
+  //added increased health decay during sprint, made the penalty threshhold to a minimum boosted speed of 2.8, so that theres atleast some kind of advantage to sprinting
+  if (playerMaxSpeed > 2.8) {
+    playerHealth = playerHealth - 0.9;
+  }
+
   playerHealth = playerHealth - 0.5;
   // Constrain the result to a sensible range
   playerHealth = constrain(playerHealth, 0, playerMaxHealth);
+
+
+
   // Check if the player is dead (0 health)
   if (playerHealth === 0) {
     // If so, the game is over

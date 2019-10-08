@@ -329,6 +329,8 @@ function showGameOver() {
   gameOverText = gameOverText + "before you died."
   // Display it in the centre of the screen
   text(gameOverText, width / 2, height / 2);
+
+  //makes the instructions dissapear during the game over screen
   fill(232, 86, 72, 91);
   text(instructions, 70, 600);
 }

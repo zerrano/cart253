@@ -140,6 +140,15 @@ function handleInput() {
   else {
     playerVY = 0;
   }
+
+  //added a sprint functionality whenever SHIFT is pressed, max speed value is constraint to a value of 4
+  if (keyIsDown(SHIFT)) {
+    playerMaxSpeed = playerMaxSpeed+0.05;
+    playerMaxSpeed = constrain(playerMaxSpeed, 2, 4)
+  }
+  else {
+    playerMaxSpeed = 2;
+  }
 }
 
 // movePlayer()

@@ -63,19 +63,28 @@ let bigText = 32;
 let splat;
 let eat = false;
 
+//background music on loop, RETRO!
+let pacman;
+
 //variable holding our background
 let bgImg;
 // setup()
 //
+
+function preload() {
+  //background music
+  pacman = loadSound("assets/sounds/pacman.wav");
+
+}
 // Sets up the basic elements of the game
 function setup() {
   createCanvas(500, 500);
   //adding a background
   bgImg=loadImage("assets/images/background.jpg");
   //preloading sound
-  splat = loadSound('assets/sounds/splat.mp3');
+  splat = loadSound("assets/sounds/splat.mp3");
   noStroke();
-
+  pacman.loop();
   // We're using simple functions to separate code out
   setupPrey();
   setupPlayer();
@@ -232,11 +241,11 @@ function checkEating() {
   let d = dist(playerX, playerY, preyX, preyY);
   // Check if it's an overlap
 
-
+  splat.stop();
   if (d < playerRadius + preyRadius) {
 
     //adding an on switch for our noise
-    eat = true;
+    splat.play();
     // Increase the player health
     playerHealth = playerHealth + eatHealth;
     // Constrain to the possible range
@@ -257,17 +266,6 @@ function checkEating() {
     }
   }
 }
-
-  //sound switch to play eating noise when the player eats bacteria
-  function eaten(){
-    if (eat === false){
-    splat.stop();
-  }
-    if (eat === true) {
-      splat.play();
-    }
-
-  }
 
 // movePrey()
 //

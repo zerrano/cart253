@@ -53,7 +53,10 @@ let preyEaten = 0;
 let noiseX = 0;
 let noiseY = 0;
 
+//added instructions on the game rules!
 let instructions = "Press shift to sprint! Eat up all that nasty bacteria, before they kill you!";
+
+let bigText = 32;
 // setup()
 //
 // Sets up the basic elements of the game
@@ -320,9 +323,12 @@ function drawPlayer() {
 // Display text about the game being over!
 function showGameOver() {
   // Set up the font
-  textSize(32);
+
+  //made the text grow obnoxiously big, to remind you that you, have failed.
+  bigText = bigText + 0.1;
+  textSize(bigText);
   textAlign(CENTER, CENTER);
-  fill(0);
+  fill(random(0, 255));
   // Set up the text to display
   let gameOverText = "GAME OVER\n"; // \n means "new line"
   gameOverText = gameOverText + "You ate " + preyEaten + " prey\n";

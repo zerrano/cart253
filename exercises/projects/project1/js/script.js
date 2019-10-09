@@ -37,7 +37,7 @@ let preyY;
 let preyRadius = 25;
 let preyVX;
 let preyVY;
-let preyMaxSpeed = 4;
+let preyMaxSpeed = 5;
 // Prey health
 let preyHealth;
 let preyMaxHealth = 100;
@@ -54,7 +54,8 @@ let noiseX = 0;
 let noiseY = 0;
 
 //added instructions on the game rules!
-let instructions = "Press shift to sprint! Eat up all that nasty bacteria, before they kill you!";
+let instructions = "Press shift to sprint! CAREFUL, you will die faster, and bacteria will shrink when sprinting! ";
+let instructions2 = "Eat up all that nasty bacteria, before they kill your host!";
 
 let bigText = 32;
 // setup()
@@ -102,7 +103,9 @@ function setupPlayer() {
 function draw() {
   background(232, 86, 72, 91);
 
-  text(instructions, 70, 470);
+  text(instructions, 10, 470);
+  text(instructions2, 100, 490);
+
   if (!gameOver) {
     handleInput();
 
@@ -331,8 +334,8 @@ function showGameOver() {
   fill(random(0, 255));
   // Set up the text to display
   let gameOverText = "GAME OVER\n"; // \n means "new line"
-  gameOverText = gameOverText + "You ate " + preyEaten + " prey\n";
-  gameOverText = gameOverText + "before you died."
+  gameOverText = gameOverText + "You ate " + preyEaten + " bacteria\n";
+  gameOverText = gameOverText + "before your host died."
   // Display it in the centre of the screen
   text(gameOverText, width / 2, height / 2);
 

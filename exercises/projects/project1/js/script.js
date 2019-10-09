@@ -55,15 +55,25 @@ let noiseY = 0;
 
 //added instructions on the game rules!
 let instructions = "Press shift to sprint! CAREFUL, you will die faster, and bacteria will shrink when sprinting! ";
-let instructions2 = "Eat up all that nasty bacteria, before they kill your host!";
+let instructions2 = "Eat up all that GREEN bacteria, before they kill your host!";
 
 let bigText = 32;
+
+//sound effects and switch for when you eat bacteria
+let splat;
+let eat = false;
+
+//variable holding our background
+let bgImg;
 // setup()
 //
 // Sets up the basic elements of the game
 function setup() {
   createCanvas(500, 500);
-
+  //adding a background
+  bgImg=loadImage("assets/images/background.jpg");
+  //preloading sound
+  splat = loadSound('assets/sounds/splat.mp3');
   noStroke();
 
   // We're using simple functions to separate code out
@@ -101,8 +111,7 @@ function setupPlayer() {
 // displays the two agents.
 // When the game is over, shows the game over screen.
 function draw() {
-  background(232, 86, 72, 91);
-
+  image(bgImg, 0, 0)
   text(instructions, 10, 470);
   text(instructions2, 100, 490);
 
@@ -214,6 +223,7 @@ function updateHealth() {
   }
 }
 
+
 // checkEating()
 //
 // Check if the player overlaps the prey and updates health of both
@@ -221,7 +231,12 @@ function checkEating() {
   // Get distance of player to prey
   let d = dist(playerX, playerY, preyX, preyY);
   // Check if it's an overlap
+
+
   if (d < playerRadius + preyRadius) {
+
+    //adding an on switch for our noise
+    eat = true;
     // Increase the player health
     playerHealth = playerHealth + eatHealth;
     // Constrain to the possible range
@@ -242,6 +257,17 @@ function checkEating() {
     }
   }
 }
+
+  //sound switch to play eating noise when the player eats bacteria
+  function eaten(){
+    if (eat === false){
+    splat.stop();
+  }
+    if (eat === true) {
+      splat.play();
+    }
+
+  }
 
 // movePrey()
 //
@@ -340,6 +366,6 @@ function showGameOver() {
   text(gameOverText, width / 2, height / 2);
 
   //makes the instructions dissapear during the game over screen
-  fill(232, 86, 72, 91);
+  fill(232, 86, 72, 0);
   text(instructions, 70, 600);
 }

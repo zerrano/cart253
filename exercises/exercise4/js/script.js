@@ -16,6 +16,10 @@ let playing = false;
 let bgColor = 0;
 let fgColor = 255;
 
+
+//adding in score counter for left side and right
+let scoreCounterR = 0;
+let scoreCounterL = 0;
 // BALL
 
 // A ball object with the properties of
@@ -123,17 +127,37 @@ function draw() {
     // inside a conditional!)
     if (ballIsOutOfBounds()) {
       // If it went off either side, reset it
+
+      if (ball.x > width) {
+        scoreCounterR = scoreCounterR + 1;
+        console.log(scoreCounterR);
+      }
+
+      if (ball.x < 0) {
+        scoreCounterL = scoreCounterL + 1;
+        console.log(scoreCounterL);
+      }
       resetBall();
       // This is where we would likely count points, depending on which side
       // the ball went off...
     }
+
   }
   else {
     // Otherwise we display the message to start the game
     displayStartMessage();
-  }
 
+  }
+    //scoreboard for player 2! (right side)
+    textSize(15);
+    fill(255); //white font
+    text("Player 2 score: " + scoreCounterR,400,400);
+    //scoreboard for player 1! (left side)
+    textSize(15);
+    fill(255); //white font
+    text("Player 1 score: " + scoreCounterL,120,400);
   // We always display the paddles and ball so it looks like Pong!
+
   displayPaddle(leftPaddle);
   displayPaddle(rightPaddle);
   displayBall();

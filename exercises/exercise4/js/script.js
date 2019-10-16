@@ -10,10 +10,10 @@
 // the left hand paddle
 
 // Whether the game has started
+let bgColor;
 let playing = false;
 
 // Game colors (using hexadecimal)
-let bgColor = 0;
 let fgColor = 255;
 
 
@@ -21,7 +21,9 @@ let fgColor = 255;
 let scoreCounterR = 0;
 let scoreCounterL = 0;
 
-
+//victory screens
+let winner1;
+let winner2;
 // BALL
 
 // A ball object with the properties of
@@ -73,6 +75,9 @@ let beepSFX;
 // Loads the beep audio for the sound of bouncing
 function preload() {
   beepSFX = new Audio("assets/sounds/beep.wav");
+  bgColor=loadImage("assets/images/bgimg.jpg");
+  winner1=loadImage("assets/images/player1wins.jpg");
+  winner2=loadImage("assets/images/player2wins.jpg");
 }
 
 // setup()
@@ -111,7 +116,7 @@ function setupPaddles() {
 function draw() {
   // Fill the background
   background(bgColor);
-  fill(255);
+  fill(0,0,255);
   textSize(25);
   text("PLAYER 1", 20, 80);
   text("PLAYER 2", 500, 80);
@@ -158,8 +163,8 @@ function draw() {
 //
   //Added in healthbars that will decrease in width according to score counters
   fill(255, 0, 0)
-  rect(530+scoreCounterR/2,20, 200-scoreCounterR, 70);
-  rect(110-scoreCounterL/2,20, 200-scoreCounterL, 70);
+  rect(550+scoreCounterR/2,20, 200-scoreCounterR, 70);
+  rect(90-scoreCounterL/2,20, 200-scoreCounterL, 70);
   fill(255);
   // We always display the paddles and ball so it looks like Pong!
 
@@ -167,13 +172,15 @@ function draw() {
   displayPaddle(rightPaddle);
   displayBall();
 
-  //winconditions
-  if (scoreCounterR === 200){
-    console.log("winner player 2");
+  //winconditions and VICTORY SCREENS!
+  if (scoreCounterR >= 200){
+    background(winner1);
+    console.log("winner player 1");
   }
 
-  if (scoreCounterL === 200){
-    console.log("winner player 1");
+  if (scoreCounterL >= 200){
+    background(winner2);
+    console.log("winner player 2");
   }
 }
 

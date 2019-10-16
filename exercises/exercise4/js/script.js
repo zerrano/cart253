@@ -24,7 +24,9 @@ let scoreCounterL = 0;
 //victory screens
 let winner1;
 let winner2;
-// BALL
+
+let scoredPoint = 1;
+let resetSpeed = 1;
 
 // A ball object with the properties of
 // position, size, velocity, and speed
@@ -75,9 +77,9 @@ let beepSFX;
 // Loads the beep audio for the sound of bouncing
 function preload() {
   beepSFX = new Audio("assets/sounds/beep.wav");
-  bgColor=loadImage("assets/images/bgimg.jpg");
-  winner1=loadImage("assets/images/player1wins.jpg");
-  winner2=loadImage("assets/images/player2wins.jpg");
+  bgColor = loadImage("assets/images/bgimg.jpg");
+  winner1 = loadImage("assets/images/player1wins.jpg");
+  winner2 = loadImage("assets/images/player2wins.jpg");
 }
 
 // setup()
@@ -116,7 +118,7 @@ function setupPaddles() {
 function draw() {
   // Fill the background
   background(bgColor);
-  fill(0,0,255);
+  fill(0, 0, 255);
   textSize(25);
   text("PLAYER 1", 20, 80);
   text("PLAYER 2", 500, 80);
@@ -153,18 +155,17 @@ function draw() {
       // the ball went off...
     }
 
-  }
-  else {
+  } else {
     // Otherwise we display the message to start the game
     displayStartMessage();
 
   }
 
-//
+  //
   //Added in healthbars that will decrease in width according to score counters
   fill(255, 0, 0)
-  rect(550+scoreCounterR/2,20, 200-scoreCounterR, 70);
-  rect(90-scoreCounterL/2,20, 200-scoreCounterL, 70);
+  rect(550 + scoreCounterR / 2, 20, 200 - scoreCounterR, 70);
+  rect(90 - scoreCounterL / 2, 20, 200 - scoreCounterL, 70);
   fill(255);
   // We always display the paddles and ball so it looks like Pong!
 
@@ -173,12 +174,12 @@ function draw() {
   displayBall();
 
   //winconditions and VICTORY SCREENS!
-  if (scoreCounterR >= 200){
+  if (scoreCounterR >= 200) {
     background(winner1);
     console.log("winner player 1");
   }
 
-  if (scoreCounterL >= 200){
+  if (scoreCounterL >= 200) {
     background(winner2);
     console.log("winner player 2");
   }
@@ -201,8 +202,7 @@ function handleInput(paddle) {
   else if (keyIsDown(paddle.downKey)) {
     // Move down
     paddle.vy = paddle.speed;
-  }
-  else {
+  } else {
     // Otherwise stop moving
     paddle.vy = 0;
   }
@@ -233,8 +233,7 @@ function ballIsOutOfBounds() {
   // Check for ball going off the sides
   if (ball.x < 0 || ball.x > width) {
     return true;
-  }
-  else {
+  } else {
     return false;
   }
 }
@@ -310,8 +309,16 @@ function resetBall() {
   // Initialise the ball's position and velocity
   ball.x = width / 2;
   ball.y = height / 2;
-  ball.vx = ball.speed;
-  ball.vy = ball.speed;
+
+  //ball travels randomly
+  ball.vx = ball.speed * scoredPoint;
+  resetSpeed = random(0, 1);
+
+  if (resetSpeed >= 0.5) {
+    ball.vy = -1 * random(ball.speed * 0.5, ball.speed * 1.5);
+  } else if (resetSpeed < 0.5) {
+    ball.vy = random(ball.speed * 0.5, ball.speed * 1.5);
+  }
 }
 
 // displayStartMessage()

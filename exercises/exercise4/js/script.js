@@ -20,6 +20,8 @@ let fgColor = 255;
 //adding in score counter for left side and right
 let scoreCounterR = 0;
 let scoreCounterL = 0;
+
+
 // BALL
 
 // A ball object with the properties of
@@ -109,7 +111,10 @@ function setupPaddles() {
 function draw() {
   // Fill the background
   background(bgColor);
-
+  fill(255);
+  textSize(25);
+  text("PLAYER 1", 20, 80);
+  text("PLAYER 2", 500, 80);
   if (playing) {
     // If the game is in play, we handle input and move the elements around
     handleInput(leftPaddle);
@@ -128,13 +133,14 @@ function draw() {
     if (ballIsOutOfBounds()) {
       // If it went off either side, reset it
 
+      //added a counter to add a point according to which side of the canvas the ball travels through
       if (ball.x > width) {
-        scoreCounterR = scoreCounterR + 1;
+        scoreCounterR = scoreCounterR + 25;
         console.log(scoreCounterR);
       }
 
       if (ball.x < 0) {
-        scoreCounterL = scoreCounterL + 1;
+        scoreCounterL = scoreCounterL + 25;
         console.log(scoreCounterL);
       }
       resetBall();
@@ -148,20 +154,30 @@ function draw() {
     displayStartMessage();
 
   }
-    //scoreboard for player 2! (right side)
-    textSize(15);
-    fill(255); //white font
-    text("Player 2 score: " + scoreCounterR,400,400);
-    //scoreboard for player 1! (left side)
-    textSize(15);
-    fill(255); //white font
-    text("Player 1 score: " + scoreCounterL,120,400);
+
+//
+  //Added in healthbars that will decrease in width according to score counters
+  fill(255, 0, 0)
+  rect(530+scoreCounterR/2,20, 200-scoreCounterR, 70);
+  rect(110-scoreCounterL/2,20, 200-scoreCounterL, 70);
+  fill(255);
   // We always display the paddles and ball so it looks like Pong!
 
   displayPaddle(leftPaddle);
   displayPaddle(rightPaddle);
   displayBall();
+
+  //winconditions
+  if (scoreCounterR === 200){
+    console.log("winner player 2");
+  }
+
+  if (scoreCounterL === 200){
+    console.log("winner player 1");
+  }
 }
+
+
 
 // handleInput()
 //

@@ -4,6 +4,11 @@
 // controlled by the arrow keys. It can move around
 // the screen and consume Prey objects to maintain its health.
 
+//score counter
+let counter = 0;
+
+
+
 class Predator {
 
   // constructor
@@ -113,12 +118,20 @@ class Predator {
       // Decrease prey health by the same amount
       prey.health -= this.healthGainPerEat;
       // Check if the prey died and reset it if so
+
+      //score counter
+      counter = counter + 1;
+
+
       if (prey.health < 0) {
         prey.reset();
-      }
-    }
-  }
 
+
+      }
+
+    }
+    text("You have eaten " + counter + " pounds of flesh!", width/2, height/2);
+  }
   // display
   //
   // Draw the predator as an ellipse on the canvas

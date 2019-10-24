@@ -13,6 +13,8 @@ let antelope;
 let zebra;
 let bee;
 
+//background imageMode
+let bgimg;
 // setup()
 //
 // Sets up a canvas
@@ -25,12 +27,16 @@ function setup() {
   bee = new Prey(100, 100, 20, color(255, 255, 0), 10);
 }
 
+//preloading our assets
+function preload() {
+  bgimg = loadImage("assets/images/bg.jpg");
+}
 // draw()
 //
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
   // Clear the background to black
-  background(0);
+  background(bgimg);
 
   // Handle input for the tiger
   tiger.handleInput();

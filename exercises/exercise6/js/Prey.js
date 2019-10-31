@@ -23,8 +23,8 @@ class Prey {
     this.vy = 0;
     this.speed = speed;
     // Time properties for noise() function
-    this.tx = random(0, 0); // To make x and y noise different
-    this.ty = random(0, 0); // we use random starting values
+    this.tx = random(0, 900); // To make x and y noise different
+    this.ty = random(0, 900); // we use random starting values
     // Health properties
     this.maxHealth = radius;
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
@@ -37,7 +37,7 @@ class Prey {
   //
   // Sets velocity based on the noise() function and the Prey's speed
   // Moves based on the resulting velocity and handles wrapping
-  mover() {
+  move() {
     // Set velocity via noise()
     this.vx = map(noise(this.tx), 0, 1, -this.speed, this.speed);
     this.vy = map(noise(this.ty), 0, 1, -this.speed, this.speed);
@@ -49,7 +49,7 @@ class Prey {
     this.ty += 0.01;
     // Handle wrapping
     this.handleWrapping();
-
+}
 
     // handleWrapping
     //
@@ -57,7 +57,7 @@ class Prey {
     // wraps it to the other side if so
     handleWrapping() {
       // Off the left or right
-      if (this.x > 0) {
+      if (this.x < 0) {
         this.x += width;
       }
       else if (this.x > width) {
@@ -81,7 +81,7 @@ class Prey {
       noStroke();
       fill(this.fillColor);
       this.radius = this.health;
-      ellipse(this.x, this.y, this.radius * "two");
+      ellipse(this.x, this.y, this.radius * 2);
       pop();
     }
 

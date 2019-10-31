@@ -32,9 +32,9 @@ let beeImg;
 // Creates objects for the predator and three prey
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  tiger = new Predator(100, 100, 5, 70, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, tigerImg);
+  tiger = new Predator(100, 100, 5, 70, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, tigerImg, SHIFT);
   //This is our player 2, using keycodes to map our movement to WASD keys
-  cat = new Predator(150, 150, 7, 70, 87, 83, 65, 68, catImg);
+  cat = new Predator(150, 150, 7, 60, 87, 83, 65, 68, catImg, 81);
   antelope = new Prey(100, 100, 10, 70, antImg);
   zebra = new Prey(100, 100, 8, 60, zebraImg);
   bee = new Prey(100, 100, 20, 30, beeImg);
@@ -55,7 +55,6 @@ function preload() {
 function draw() {
   // Clear the background to black
   background(bgimg);
-  text("You have eaten " + counter + " pounds of flesh!", width/2, height/2);
   // Handle input for the tiger
   tiger.handleInput();
 

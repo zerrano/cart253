@@ -53,6 +53,7 @@ function preload() {
 //
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
+
   // Clear the background to black
   background(bgimg);
   // Handle input for the tiger
@@ -83,4 +84,17 @@ function draw() {
   antelope.display();
   zebra.display();
   bee.display();
+
+  //instructions for how to win
+  fill(0);
+  textSize(20);
+  text("Team up, catch and devourer up to 5 prey to win!", windowWidth/2-200, windowHeight/2-200);
+
+  //score tracker for if either predator eats 5 prey
+  if (eaten >= 5) {
+    background(200,200,140);
+    fill(255);
+    textSize(20);
+    text("You have eaten them all!", windowWidth/2, windowHeight/2);
+  }
 }

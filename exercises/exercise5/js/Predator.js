@@ -86,8 +86,8 @@ class Predator {
     this.y += this.vy;
     // Update health
     this.health = this.health - this.healthLossPerMove;
-    // changed the minimum size to 5 so that you don't completely lose view of your predator
-    this.health = constrain(this.health, 5, this.maxHealth);
+    // changed the minimum size to 3 so that you don't completely lose view of your predator
+    this.health = constrain(this.health, 2, this.maxHealth);
     // Handle wrapping
     this.handleWrapping();
   }

@@ -18,24 +18,36 @@ let bee;
 
 //background image
 let bgimg;
+
+//avatar images
+let tigerImg;
+let catImg;
+let antImg;
+let zebraImg;
+let beeImg;
+
 // setup()
 //
 // Sets up a canvas
 // Creates objects for the predator and three prey
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  tiger = new Predator(100, 100, 5, color(200, 200, 0), 40, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW);
+  tiger = new Predator(100, 100, 5, 70, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, tigerImg);
   //This is our player 2, using keycodes to map our movement to WASD keys
-  cat = new Predator(150, 150, 7, color(150, 150, 150), 40, 87, 83, 65, 68);
-  antelope = new Prey(100, 100, 10, color(255, 100, 10), 50);
-  zebra = new Prey(100, 100, 8, color(255, 0, 255), 60);
-  bee = new Prey(100, 100, 20, color(255, 255, 0), 10);
+  cat = new Predator(150, 150, 7, 70, 87, 83, 65, 68, catImg);
+  antelope = new Prey(100, 100, 10, 70, antImg);
+  zebra = new Prey(100, 100, 8, 60, zebraImg);
+  bee = new Prey(100, 100, 20, 30, beeImg);
 }
 
 //preloading our assets
 function preload() {
   bgimg = loadImage("assets/images/bg.jpg");
-  
+  tigerImg = loadImage("assets/images/tiger.png");
+  catImg = loadImage("assets/images/cat.png");
+  antImg = loadImage("assets/images/antelope.png");
+  zebraImg = loadImage("assets/images/zebra.png");
+  beeImg = loadImage("assets/images/bee.png");
 }
 // draw()
 //
@@ -43,7 +55,7 @@ function preload() {
 function draw() {
   // Clear the background to black
   background(bgimg);
-
+  text("You have eaten " + counter + " pounds of flesh!", width/2, height/2);
   // Handle input for the tiger
   tiger.handleInput();
 

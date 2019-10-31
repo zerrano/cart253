@@ -5,8 +5,7 @@
 // the screen and consume Prey objects to maintain its health.
 
 //score counter
-let counter = 0;
-
+let eaten = 0;
 
 
 class Predator {
@@ -15,7 +14,7 @@ class Predator {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, fillColor, radius, upKey, downKey, leftKey, rightKey) {
+  constructor(x, y, speed, radius, upKey, downKey, leftKey, rightKey, predatorImg) {
     // Position
     this.x = x;
     this.y = y;
@@ -29,13 +28,13 @@ class Predator {
     this.healthLossPerMove = 0.1;
     this.healthGainPerEat = 1;
     // Display properties
-    this.fillColor = fillColor;
     this.radius = this.health; // Radius is defined in terms of health
     // Input properties changed
     this.upKey = upKey;
     this.downKey = downKey;
     this.leftKey = leftKey;
     this.rightKey = rightKey;
+    this.predatorImg = predatorImg;
   }
 
   // handleInput
@@ -76,7 +75,8 @@ class Predator {
     this.y += this.vy;
     // Update health
     this.health = this.health - this.healthLossPerMove;
-    this.health = constrain(this.health, 0, this.maxHealth);
+    // changed the minimum size to 5 so that you don't completely lose view of your predator
+    this.health = constrain(this.health, 5, this.maxHealth);
     // Handle wrapping
     this.handleWrapping();
   }
@@ -114,23 +114,21 @@ class Predator {
     if (d < this.radius + prey.radius) {
       // Increase predator health and constrain it to its possible range
       this.health += this.healthGainPerEat;
-      this.health = constrain(this.health, 0, this.maxHealth);
+      this.health = constrain(this.health, 5, this.maxHealth);
       // Decrease prey health by the same amount
       prey.health -= this.healthGainPerEat;
       // Check if the prey died and reset it if so
 
-      //score counter
-      counter = counter + 1;
-
 
       if (prey.health < 0) {
+        eaten = eaten+1;
         prey.reset();
 
 
       }
 
     }
-    text("You have eaten " + counter + " pounds of flesh!", width/2, height/2);
+
   }
   // display
   //
@@ -139,9 +137,11 @@ class Predator {
   display() {
     push();
     noStroke();
-    fill(this.fillColor);
     this.radius = this.health;
-    ellipse(this.x, this.y, this.radius * 2);
+    //removed the ellipse in exchange for an image property
+    image(this.predatorImg, this.x, this.y, this.radius, this.radius);
+
+    text("Victims: " + eaten, this.x+5, this.y+5);
     pop();
   }
 }

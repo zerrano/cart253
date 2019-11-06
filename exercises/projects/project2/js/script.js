@@ -56,12 +56,18 @@ function preload() {
 //
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
-  // Clear the background to black
+
   background(bgImg);
 
-  fill(40, 200, 40);
+  fill(220, 40, 60);
   textSize(50);
   text ("Welcome to the Jungle!", windowWidth/2-250, 100);
+  fill(255);
+  textSize(20);
+  text ("How many prey you've eaten: " + eaten, windowWidth/2-150, 130);
+  text ("The Tiger (p1) and Cat (p2), must team up and eat all the animals!", windowWidth/2-280, 600);
+  text ("To sprint, the Tiger presses Shift, while the Cat presses Q!", windowWidth/2-260, 640);
+
   // Handle input for the predators
   tiger.handleInput();
   cat.handleInput();

@@ -87,7 +87,7 @@ class Predator {
     this.y += this.vy;
     // Update health
     this.health = this.health - this.healthLossPerMove;
-    this.health = constrain(this.health, 0, this.maxHealth);
+    this.health = constrain(this.health, 3, this.maxHealth);
     // Handle wrapping
     this.handleWrapping();
   }
@@ -125,11 +125,11 @@ class Predator {
     if (d < this.radius + prey.radius) {
       // Increase predator health and constrain it to its possible range
       this.health += this.healthGainPerEat;
-      this.health = constrain(this.health, 0, this.maxHealth);
+      this.health = constrain(this.health, 3, this.maxHealth);
       // Decrease prey health by the same amount
       prey.health -= this.healthGainPerEat;
       // Check if the prey died and reset it if so
-      if (prey.health < 0) {
+      if (prey.health < 3) {
         eaten = eaten + 1;
         console.log("eaten!");
         prey.reset();

@@ -37,7 +37,8 @@ function setup() {
   cat = new Predator(150, 150, 7, 60, 87, 83, 65, 68, catImg, 81);
   antelope = new Prey(100, 100, 10, 70, antImg);
   zebra = new Prey(100, 100, 8, 60, zebraImg);
-  bee = new Prey(100, 100, 20, 30, beeImg);
+  bee = new Prey(100, 100, 13, 30, beeImg);
+
 }
 
 //preloading our assets
@@ -96,5 +97,6 @@ function draw() {
     fill(255);
     textSize(20);
     text("You have eaten them all!", windowWidth/2, windowHeight/2);
+
   }
 }

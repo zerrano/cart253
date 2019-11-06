@@ -24,7 +24,7 @@ let zebraImg;
 let beeImg;
 
 //backgrounds
-
+let bgImg;
 let endImg;
 // setup()
 //
@@ -36,7 +36,7 @@ function setup() {
   cat = new Predator(150, 150, 7, 50, 87, 83, 65, 68, catImg, 81);
   antelope = new Prey(100, 100, 10, 80, antelopeImg);
   zebra = new Prey(100, 100, 8, 60, zebraImg);
-  bee = new Prey(100, 100, 20, 30, beeImg);
+  bee = new Prey(100, 100, 13, 30, beeImg);
 }
 
 function preload() {
@@ -46,6 +46,9 @@ function preload() {
   zebraImg = loadImage("assets/images/zebra.png");
   beeImg = loadImage("assets/images/bee.png");
 
+  //background
+  bgImg = loadImage("assets/images/bg.jpg");
+
   //ending screen
   endImg = loadImage("assets/images/end.jpg");
 }
@@ -54,8 +57,11 @@ function preload() {
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
   // Clear the background to black
-  background(0);
+  background(bgImg);
 
+  fill(40, 200, 40);
+  textSize(50);
+  text ("Welcome to the Jungle!", windowWidth/2-250, 100);
   // Handle input for the predators
   tiger.handleInput();
   cat.handleInput();

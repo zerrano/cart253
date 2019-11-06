@@ -26,6 +26,7 @@ let beeImg;
 //backgrounds
 let bgImg;
 let endImg;
+let overImg;
 
 //sounds
 let bgSound;
@@ -60,6 +61,9 @@ function preload() {
 
   //ending screen
   endImg = loadImage("assets/images/end.jpg");
+
+  //loss screen
+  overImg = loadImage("assets/images/over.jpg");
 
   //background music
   bgSound = new Audio("assets/sounds/bg.mp3");
@@ -115,4 +119,5 @@ function draw() {
     textSize(20);
     text("You have eaten them all!", windowWidth/2, windowHeight/2+300);
   }
+
 }

@@ -26,6 +26,9 @@ let beeImg;
 //backgrounds
 let bgImg;
 let endImg;
+
+//sounds
+let bgSound;
 // setup()
 //
 // Sets up a canvas
@@ -34,6 +37,8 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   tiger = new Predator(100, 100, 5, 70, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, tigerImg, SHIFT);
   cat = new Predator(150, 150, 7, 50, 87, 83, 65, 68, catImg, 81);
+
+  //Prey
   antelope = new Prey(100, 100, 10, 80, antelopeImg);
   zebra = new Prey(100, 100, 8, 60, zebraImg);
   bee = new Prey(100, 100, 13, 30, beeImg);
@@ -51,6 +56,11 @@ function preload() {
 
   //ending screen
   endImg = loadImage("assets/images/end.jpg");
+
+  //background music
+  bgSound = new Audio("assets/sounds/bg.mp3");
+  bgSound.currentTime = 0;
+  bgSound.play();
 }
 // draw()
 //
@@ -58,7 +68,6 @@ function preload() {
 function draw() {
 
   background(bgImg);
-
   fill(220, 40, 60);
   textSize(50);
   text ("Welcome to the Jungle!", windowWidth/2-250, 100);

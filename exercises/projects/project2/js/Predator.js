@@ -24,8 +24,8 @@ class Predator {
     this.healthLossPerMove = 0.1;
     this.healthGainPerEat = 1;
     // Display properties
-    this.fillColor = fillColor;
     this.radius = this.health; // Radius is defined in terms of health
+    this.predatorImg = predatorImg; // our predator avatar
     // Input properties
     this.upKey = upKey;
     this.downKey = downKey;
@@ -127,9 +127,8 @@ class Predator {
   display() {
     push();
     noStroke();
-    fill(this.fillColor);
     this.radius = this.health;
-    ellipse(this.x, this.y, this.radius * 2);
+    image(this.predatorImg, this.x, this.y, this.radius, this.radius);
     pop();
   }
 }

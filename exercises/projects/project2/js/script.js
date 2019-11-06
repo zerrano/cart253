@@ -74,4 +74,12 @@ function draw() {
   antelope.display();
   zebra.display();
   bee.display();
+
+  //score tracker for if either predator eats 5 prey
+  if (eaten >= 5) {
+    background(200,200,140);
+    fill(255);
+    textSize(20);
+    text("You have eaten them all!", windowWidth/2, windowHeight/2);
+  }
 }

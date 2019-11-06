@@ -4,6 +4,9 @@
 // controlled by the arrow keys. It can move around
 // the screen and consume Prey objects to maintain its health.
 
+//score counter; will trigger victory screen when a score is met
+let eaten = 0;
+
 class Predator {
 
   // constructor
@@ -127,6 +130,8 @@ class Predator {
       prey.health -= this.healthGainPerEat;
       // Check if the prey died and reset it if so
       if (prey.health < 0) {
+        eaten = eaten + 1;
+        console.log("eaten!");
         prey.reset();
       }
     }

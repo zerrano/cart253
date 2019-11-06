@@ -1,9 +1,11 @@
-// Predator-Prey Simulation
-// by Pippin Barr
+// Surviving in the Wild!
+// by Timothy Serrano
 //
-// Creates a predator and three prey (of different sizes and speeds)
-// The predator chases the prey using the arrow keys and consumes them.
-// The predator loses health over time, so must keep eating to survive.
+// Creates 2 predators that two seperate players control. Chase and east all the other animals!
+// The tiger chases the prey using the arrow keys and consumes them.
+// The cat chases the prey using W,A,S,D and consumes them.
+// Both predators have a sprint feature. Tiger uses SHIFT, cat uses Q.
+// The predators loses health over time, so must keep eating to survive.
 
 // Our predators
 let tiger;
@@ -21,6 +23,9 @@ let antelopeImg;
 let zebraImg;
 let beeImg;
 
+//backgrounds
+
+let endImg;
 // setup()
 //
 // Sets up a canvas
@@ -40,6 +45,9 @@ function preload() {
   antelopeImg = loadImage("assets/images/antelope.png");
   zebraImg = loadImage("assets/images/zebra.png");
   beeImg = loadImage("assets/images/bee.png");
+
+  //ending screen
+  endImg = loadImage("assets/images/end.jpg");
 }
 // draw()
 //
@@ -77,9 +85,9 @@ function draw() {
 
   //score tracker for if either predator eats 5 prey
   if (eaten >= 5) {
-    background(200,200,140);
+    background(endImg);
     fill(255);
     textSize(20);
-    text("You have eaten them all!", windowWidth/2, windowHeight/2);
+    text("You have eaten them all!", windowWidth/2, windowHeight/2+300);
   }
 }

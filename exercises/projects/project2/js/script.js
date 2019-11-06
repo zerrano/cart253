@@ -65,7 +65,7 @@ function draw() {
   fill(255);
   textSize(20);
   text ("How many prey you've eaten: " + eaten, windowWidth/2-150, 130);
-  text ("The Tiger (p1) and Cat (p2), must team up and eat all the animals!", windowWidth/2-280, 600);
+  text ("The Tiger (p1) and Cat (p2), must team up and eat up to 5 animals!", windowWidth/2-280, 600);
   text ("To sprint, the Tiger presses Shift, while the Cat presses Q!", windowWidth/2-260, 640);
 
   // Handle input for the predators

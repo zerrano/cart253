@@ -133,6 +133,9 @@ class Predator {
         eaten = eaten + 1;
         console.log("eaten!");
         prey.reset();
+
+        bite.currentTime = 0;
+        bite.play();
       }
     }
   }
@@ -145,7 +148,9 @@ class Predator {
     push();
     noStroke();
     this.radius = this.health;
-    image(this.predatorImg, this.x, this.y, this.radius, this.radius);
+    image(this.predatorImg, this.x, this.y, 50, 50);
+    fill(255, 0, 0);
+    rect(this.x,this.y-20,this.health,8);
     pop();
   }
 }

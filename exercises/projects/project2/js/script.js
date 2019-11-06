@@ -29,6 +29,8 @@ let endImg;
 
 //sounds
 let bgSound;
+let bite;
+
 // setup()
 //
 // Sets up a canvas
@@ -42,6 +44,8 @@ function setup() {
   antelope = new Prey(100, 100, 10, 80, antelopeImg);
   zebra = new Prey(100, 100, 8, 60, zebraImg);
   bee = new Prey(100, 100, 13, 30, beeImg);
+  bgSound.currentTime = 0;
+  bgSound.play();
 }
 
 function preload() {
@@ -59,8 +63,8 @@ function preload() {
 
   //background music
   bgSound = new Audio("assets/sounds/bg.mp3");
-  bgSound.currentTime = 0;
-  bgSound.play();
+  //eating sound
+  bite = new Audio("assets/sounds/bite.mp3")
 }
 // draw()
 //

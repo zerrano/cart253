@@ -38,6 +38,8 @@ class Predator {
 
     //sprint function
     this.shiftKey = shiftKey;
+
+
   }
 
   // handleInput
@@ -88,6 +90,15 @@ class Predator {
     // Update health
     this.health = this.health - this.healthLossPerMove;
     this.health = constrain(this.health, 3, this.maxHealth);
+
+    //controller to detect whether or not our pre are dead or alive
+    if (this.health === 3) {
+      this.lost = true;
+    }
+
+    else if (this.health > 3) {
+      this.lost = false;
+    }
     // Handle wrapping
     this.handleWrapping();
   }
@@ -140,6 +151,7 @@ class Predator {
     }
   }
 
+
   // display
   //
   // Draw the predator as an ellipse on the canvas
@@ -148,7 +160,7 @@ class Predator {
     push();
     noStroke();
     this.radius = this.health;
-    image(this.predatorImg, this.x, this.y, 50, 50);
+    image(this.predatorImg, this.x, this.y, 100, 100);
     fill(255, 0, 0);
     rect(this.x,this.y-20,this.health,8);
     pop();

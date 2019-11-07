@@ -47,20 +47,20 @@ let state = "WELCOME";
 // Creates objects for the predator and three prey
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  tiger = new Predator(100, 100, 5, 70, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, tigerImg, SHIFT);
-  cat = new Predator(150, 150, 7, 50, 87, 83, 65, 68, catImg, 81);
+  tiger = new Predator(200, 200, 5, 80, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, tigerImg, SHIFT, false);
+  cat = new Predator(150, 150, 7, 80, 87, 83, 65, 68, catImg, 81, false);
 
   //Prey
-  antelope = new Prey(100, 100, 10, 80, antelopeImg);
-  zebra = new Prey(100, 100, 8, 60, zebraImg);
-  bee = new Prey(100, 100, 13, 30, beeImg);
+  antelope = new Prey(100, 100, 10, 200, antelopeImg);
+  zebra = new Prey(100, 100, 8, 200, zebraImg);
+  bee = new Prey(100, 100, 13, 50, beeImg);
 
   //moss array
   for (let i = 0; i < numPrey; i++) {
     let preyX = random(0, width);
     let preyY = random(0, height);
     let preyColor = ladyImg;
-    let preyRadius = random(3, 50);
+    let preyRadius = random(30, 50);
     let newPrey = new moss(preyX, preyY, preyColor, preyRadius);
     // Add the new Prey object to the END of our array using push()
     prey.push(newPrey);
@@ -85,7 +85,7 @@ function preload() {
   endImg = loadImage("assets/images/end.jpg");
 
   //loss screen
-  overImg = loadImage("assets/images/over.jpg");
+  overImg = loadImage("assets/images/lose.png");
 
   //background music
   bgSound = new Audio("assets/sounds/bg.mp3");
@@ -126,13 +126,17 @@ function mousePressed() {
 //THE ENTIRE MAIN GAME - Game state switches over from welcome screen to here when left mouse is clicked
 function mainGame() {
   background(bgImg);
-  text ("How many prey you've eaten: " + eaten, windowWidth/2-150, 130);
+
+  textSize(25);
+  fill(255, 0, 0);
+  text ("How many prey you've eaten: " + eaten, windowWidth/2-150, 30);
 
 for (let i = 0; i < prey.length; i++) {
   // Again, we refer to prey[i] to get the current Prey object as we
   // count through the array one by one
   tiger.handleEating(prey[i]);
   cat.handleEating(prey[i]);
+
 }
   // Handle input for the predators
   tiger.handleInput();
@@ -172,19 +176,14 @@ for (let i = 0; i < prey.length; i++) {
     background(endImg);
     fill(255);
     textSize(20);
-    text("You have eaten them all!", windowWidth/2, windowHeight/2+300);
+    text("You have eaten them all!", windowWidth/2, windowHeight-30);
   }
+
 }
 
 // Our welcome page with instructions on how to play the game! Left mojuse click to switch states into the main game
 function welcomePage() {
   background (welcomeImg);
-  fill(220, 0, 0);
-  textSize(100);
-  text ("Welcome to the Jungle!", windowWidth/2-500, 200);
-  fill(255, 0, 0);
-  textSize(20);
-  text ("The Tiger (p1) and Cat (p2), must team up and eat up to 5 animals!", windowWidth/2-280, 600);
-  text ("To sprint, the Tiger presses Shift, while the Cat presses Q!", windowWidth/2-260, 640);
+
 
 }

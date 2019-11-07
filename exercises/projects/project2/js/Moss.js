@@ -4,20 +4,19 @@
 // on screen based on a noise() function. It can move around
 // the screen and be consumed by Predator objects.
 
-class Lady {
+class moss {
 
   // constructor
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, fillColor, radius) {
+  constructor(x, y, fillColor, radius) {
     // Position
     this.x = x;
     this.y = y;
     // Velocity and speed
     this.vx = 0;
     this.vy = 0;
-    this.speed = speed;
     // Time properties for noise() function
     this.tx = random(0, 1000); // To make x and y noise different
     this.ty = random(0, 1000); // we use random starting values
@@ -27,24 +26,6 @@ class Lady {
     // Display properties
     this.ladyImg = ladyImg;
     this.radius = this.health;
-  }
-
-  // move
-  //
-  // Sets velocity based on the noise() function and the Prey's speed
-  // Moves based on the resulting velocity and handles wrapping
-  move() {
-    // Set velocity via noise()
-    this.vx = map(noise(this.tx), 0, 1, -this.speed, this.speed);
-    this.vy = map(noise(this.ty), 0, 1, -this.speed, this.speed);
-    // Update position
-    this.x += this.vx;
-    this.y += this.vy;
-    // Update time properties
-    this.tx += 0.01;
-    this.ty += 0.01;
-    // Handle wrapping
-    this.handleWrapping();
   }
 
   // handleWrapping

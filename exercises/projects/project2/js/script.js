@@ -36,6 +36,10 @@ let bite;
 //ARRAY STUFF
 let numPrey = 20;
 let prey = [];
+
+//game states
+
+let state = "WELCOME";
 // setup()
 //
 // Sets up a canvas
@@ -50,16 +54,13 @@ function setup() {
   zebra = new Prey(100, 100, 8, 60, zebraImg);
   bee = new Prey(100, 100, 13, 30, beeImg);
 
-  //ladybug array
+  //moss array
   for (let i = 0; i < numPrey; i++) {
-    // Generate (mostly) random values for the arguments of the Prey constructor
     let preyX = random(0, width);
     let preyY = random(0, height);
-    let preySpeed = random(2, 10);
     let preyColor = ladyImg;
     let preyRadius = random(3, 50);
-    // Create a new Prey objects with the random values
-    let newPrey = new Lady(preyX, preyY, preySpeed, preyColor, preyRadius);
+    let newPrey = new moss(preyX, preyY, preyColor, preyRadius);
     // Add the new Prey object to the END of our array using push()
     prey.push(newPrey);
   }
@@ -95,23 +96,29 @@ function preload() {
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
 
-  background(bgImg);
-  fill(220, 40, 60);
-  textSize(50);
-  text ("Welcome to the Jungle!", windowWidth/2-250, 100);
-  fill(255);
-  textSize(20);
-  text ("How many prey you've eaten: " + eaten, windowWidth/2-150, 130);
-  text ("The Tiger (p1) and Cat (p2), must team up and eat up to 5 animals!", windowWidth/2-280, 600);
-  text ("To sprint, the Tiger presses Shift, while the Cat presses Q!", windowWidth/2-260, 640);
+  if (state === "WELCOME"){
+    welcomePage(); //shows our welcome screen
+  }
 
-  //giving function to our ladybug array as well as allowing both our tiger and our cat player to eat
-  for (let i = 0; i < prey.length; i++) {
-  // ... and tell it to move. Note the use of "i" to give the address/location
-  // in the array of the specific Prey element we want to "talk to"
-  prey[i].move();
+  else if (state === "GAME"){
+    mainGame(); //loads in the main game once left mouse click
+  }
+
 }
 
+function mousePressed() {
+  if (state === "WELCOME") {
+    // If we were on the title we need to switch to instructions
+    state = "GAME";
+  }
+  else if (state === "GAME") {
+    // If we were on the instructions we need to switch to the game itself
+    state = "GAME";
+  }
+}
+function mainGame() {
+  background(bgImg);
+  text ("How many prey you've eaten: " + eaten, windowWidth/2-150, 130);
 // Because the tiger could eat any Prey object in the array, we need to do the same kind of
 // loop again for handleEating...
 for (let i = 0; i < prey.length; i++) {
@@ -154,11 +161,22 @@ for (let i = 0; i < prey.length; i++) {
     prey[i].display();
   }
   //score tracker for if either predator eats 5 prey
-  if (eaten >= 5) {
+  if (eaten >= 10) {
     background(endImg);
     fill(255);
     textSize(20);
     text("You have eaten them all!", windowWidth/2, windowHeight/2+300);
   }
+}
+
+// Our welcome page with instructions on how to play the game! Left mojuse click to switch states into the main game
+function welcomePage() {
+  fill(220, 40, 60);
+  textSize(100);
+  text ("Welcome to the Jungle!", windowWidth/2-500, 200);
+  fill(255, 0, 0);
+  textSize(20);
+  text ("The Tiger (p1) and Cat (p2), must team up and eat up to 5 animals!", windowWidth/2-280, 600);
+  text ("To sprint, the Tiger presses Shift, while the Cat presses Q!", windowWidth/2-260, 640);
 
 }

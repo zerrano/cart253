@@ -28,6 +28,7 @@ let ladyImg;
 let bgImg;
 let endImg;
 let overImg;
+let welcomeImg;
 
 //sounds
 let bgSound;
@@ -77,6 +78,9 @@ function preload() {
   //background
   bgImg = loadImage("assets/images/bg.jpg");
 
+  //welcome screen
+  welcomeImg = loadImage("assets/images/welcomebg.png");
+
   //ending screen
   endImg = loadImage("assets/images/end.jpg");
 
@@ -106,6 +110,7 @@ function draw() {
 
 }
 
+//MAIN GAME STATE SWITCH - The controller that controls what state the current game is in, between the welcome screen and the main game
 function mousePressed() {
   if (state === "WELCOME") {
     // If we were on the title we need to switch to instructions
@@ -116,11 +121,13 @@ function mousePressed() {
     state = "GAME";
   }
 }
+
+
+//THE ENTIRE MAIN GAME - Game state switches over from welcome screen to here when left mouse is clicked
 function mainGame() {
   background(bgImg);
   text ("How many prey you've eaten: " + eaten, windowWidth/2-150, 130);
-// Because the tiger could eat any Prey object in the array, we need to do the same kind of
-// loop again for handleEating...
+
 for (let i = 0; i < prey.length; i++) {
   // Again, we refer to prey[i] to get the current Prey object as we
   // count through the array one by one
@@ -171,7 +178,8 @@ for (let i = 0; i < prey.length; i++) {
 
 // Our welcome page with instructions on how to play the game! Left mojuse click to switch states into the main game
 function welcomePage() {
-  fill(220, 40, 60);
+  background (welcomeImg);
+  fill(220, 0, 0);
   textSize(100);
   text ("Welcome to the Jungle!", windowWidth/2-500, 200);
   fill(255, 0, 0);

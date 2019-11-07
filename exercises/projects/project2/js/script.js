@@ -42,7 +42,6 @@ let prey = [];
 
 let state = "WELCOME";
 // setup()
-//
 // Sets up a canvas
 // Creates objects for the predator and three prey
 function setup() {

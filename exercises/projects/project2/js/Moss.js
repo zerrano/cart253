@@ -26,6 +26,7 @@ class moss {
     // Display properties
     this.ladyImg = ladyImg;
     this.radius = this.health;
+    this.healthGainPerEat = -1;
   }
 
   // handleWrapping

@@ -108,6 +108,9 @@ function draw() {
     mainGame(); //loads in the main game once left mouse click
   }
 
+  if (state === "END"){
+    endPage();//will bring up the victory screen once all prey are eaten
+  }
 }
 
 //MAIN GAME STATE SWITCH - The controller that controls what state the current game is in, between the welcome screen and the main game
@@ -120,6 +123,8 @@ function mousePressed() {
     // If we were on the instructions we need to switch to the game itself
     state = "GAME";
   }
+
+
 }
 
 
@@ -171,12 +176,10 @@ for (let i = 0; i < prey.length; i++) {
     // element we are counting through in the loop
     prey[i].display();
   }
-  //score tracker for if either predator eats 5 prey
+
+  //win conditions
   if (eaten >= 10) {
-    background(endImg);
-    fill(255);
-    textSize(20);
-    text("You have eaten them all!", windowWidth/2, windowHeight-30);
+    state = "END";
   }
 
 }
@@ -186,4 +189,11 @@ function welcomePage() {
   background (welcomeImg);
 
 
+}
+
+function endPage() {
+  background(endImg);
+  fill(255);
+  textSize(20);
+  text("You have eaten them all!", windowWidth/2, windowHeight-30);
 }

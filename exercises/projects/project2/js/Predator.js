@@ -137,7 +137,7 @@ class Predator {
     // Check if the distance is less than their two radii (an overlap)
     if (d < this.radius + prey.radius) {
       // Increase predator health and constrain it to its possible range
-      this.health += prey.healthGainPerEat;
+      this.health += prey.healthGainPerEat; // changed this.healthGainPerEat to prey.healthGainPerEat since we want health to drain whenever the player gets near moss
       this.health = constrain(this.health, 3, this.maxHealth);
       // Decrease prey health by the same amount
       prey.health -= this.healthGainPerEat;

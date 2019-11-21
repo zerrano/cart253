@@ -4,13 +4,14 @@
 // controlled by the arrow keys. It can move around
 // the screen and consume Prey objects to maintain its health.
 
+
 class Predator {
 
   // constructor
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, fillColor, radius) {
+  constructor(x, y, speed, predatorImg, radius) {
     // Position
     this.x = x;
     this.y = y;
@@ -22,9 +23,9 @@ class Predator {
     this.maxHealth = radius;
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
     this.healthLossPerMove = 0.1;
-    this.healthGainPerEat = 1;
+    this.healthGainPerEat = 3;
     // Display properties
-    this.fillColor = fillColor;
+    this.predatorImg = predatorImg;
     this.radius = this.health; // Radius is defined in terms of health
     // Input properties
     this.upKey = UP_ARROW;
@@ -115,6 +116,7 @@ class Predator {
       // Check if the prey died and reset it if so
       if (prey.health < 0) {
         prey.reset();
+        console.log("Eaten!");
       }
     }
   }
@@ -126,9 +128,8 @@ class Predator {
   display() {
     push();
     noStroke();
-    fill(this.fillColor);
     this.radius = this.health;
-    ellipse(this.x, this.y, this.radius * 2);
+    image(this.predatorImg, this.x, this.y, 100, 100);
     pop();
   }
 }

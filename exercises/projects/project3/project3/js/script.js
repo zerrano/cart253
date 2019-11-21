@@ -17,27 +17,34 @@ let antelope;
 let zebra;
 let bee;
 
+//our predator images
+
+let playImg;
+let noteImg;
+
 // setup()
 //
 // Sets up a canvas
 // Creates objects for the predator and three prey
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  play = new Predator(100, 100, 5, color(200, 200, 0), 40);
-  antelope = new Prey(100, 100, 10, color(255, 100, 10), 50);
-  zebra = new Prey(100, 100, 8, color(255, 255, 255), 60);
-  bee = new Prey(100, 100, 20, color(255, 255, 0), 10);
+  play = new Predator(100, 100, 5, playImg, 40);
+  antelope = new Prey(random(0, 1000), random(0, 100), noteImg, 50);
+  zebra = new Prey(random(0, 1000), random(0, 100), noteImg, 60);
+  bee = new Prey(random(0, 1000), random(0, 100), noteImg, 10);
 
-  drums = EDrums('x*o*x*o-')
-  follow = Follow( drums )
 }
 
+function preload(){
+  playImg = loadImage("assets/images/play.png");
+  noteImg = loadImage("assets/images/note.png");
+}
 // draw()
 //
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
   // Clear the background to black
-  background(follow.getValue() * 255);
+  background(0);
 
   // Handle input for the tiger
   play.handleInput();
@@ -50,12 +57,13 @@ function draw() {
 
   // Handle the tiger eating any of the prey
   play.handleEating(antelope);
-  tiger.handleEating(zebra);
-  tiger.handleEating(bee);
+  play.handleEating(zebra);
+  play.handleEating(bee);
 
   // Display all the "animals"
   play.display();
   antelope.display();
   zebra.display();
   bee.display();
+
 }

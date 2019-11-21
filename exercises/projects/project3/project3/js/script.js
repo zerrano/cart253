@@ -27,6 +27,7 @@ let mainTheme;
 let kicker;
 let drums;
 let follow;
+let rhodes;
 
 // setup()
 //
@@ -35,8 +36,16 @@ let follow;
 function setup() {
   createCanvas(windowWidth, windowHeight);
   //instruments
+
+  //clave/knee slapper instrument
   mainTheme = Clave().play( Rndf(1500, 5000), 1/16 );
+  //kicker
   kicker = Kick().play( 55, 1/4 );
+  //synth chords
+  rhodes = Synth( 'rhodes', {amp:.35} )
+    .chord.seq( Rndi(0,6,3), 1 )
+    .fx.add( Delay() )
+
   drums = EDrums('x*o*x*o-');
   drums.stop();
   follow = Follow( kicker);

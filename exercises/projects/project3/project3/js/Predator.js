@@ -11,7 +11,7 @@ class Predator {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, predatorImg, radius) {
+  constructor(x, y, speed, upKey, downKey, leftKey, rightKey, predatorImg, shiftKey, radius, drums) {
     // Position
     this.x = x;
     this.y = y;
@@ -19,6 +19,7 @@ class Predator {
     this.vx = 0;
     this.vy = 0;
     this.speed = speed;
+    this.oSpeed = speed;
     // Health properties
     this.maxHealth = radius;
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
@@ -28,10 +29,14 @@ class Predator {
     this.predatorImg = predatorImg;
     this.radius = this.health; // Radius is defined in terms of health
     // Input properties
-    this.upKey = UP_ARROW;
-    this.downKey = DOWN_ARROW;
-    this.leftKey = LEFT_ARROW;
-    this.rightKey = RIGHT_ARROW;
+    this.upKey = upKey;
+    this.downKey = downKey;
+    this.leftKey = leftKey;
+    this.rightKey = rightKey;
+    //instruments
+    this.drums = drums;
+    //sprint function
+    this.shiftKey = shiftKey;
   }
 
   // handleInput
@@ -59,8 +64,15 @@ class Predator {
     else {
       this.vy = 0;
     }
-  }
-
+    //sprint feature
+    if (keyIsDown(this.shiftKey)) {
+      this.speed = this.speed + 0.2;
+      this.speed = constrain(this.speed, this.oSpeed, this.oSpeed+11);
+    }
+    else {
+      this.speed = this.oSpeed;
+    }
+}
   // move
   //
   // Updates the position according to velocity
@@ -110,12 +122,14 @@ class Predator {
     if (d < this.radius + prey.radius) {
       // Increase predator health and constrain it to its possible range
       this.health += this.healthGainPerEat;
-      this.health = constrain(this.health, 0, this.maxHealth);
+      this.health = constrain(this.health, 5, this.maxHealth);
       // Decrease prey health by the same amount
       prey.health -= this.healthGainPerEat;
-      // Check if the prey died and reset it if so
-      if (prey.health < 0) {
+      // Check if the prey died and reset it, also plays a simple snare beat when eaten
+      if (prey.health < 5) {
         prey.reset();
+        this.drums.play("o");
+        background(255);
         console.log("Eaten!");
       }
     }
@@ -128,7 +142,6 @@ class Predator {
   display() {
     push();
     noStroke();
-    this.radius = this.health;
     image(this.predatorImg, this.x, this.y, 100, 100);
     pop();
   }

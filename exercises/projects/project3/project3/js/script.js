@@ -22,13 +22,25 @@ let bee;
 let playImg;
 let noteImg;
 
+//gibber music
+let mainTheme;
+let kicker;
+let drums;
+let follow;
+
 // setup()
 //
 // Sets up a canvas
 // Creates objects for the predator and three prey
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  play = new Predator(100, 100, 5, playImg, 40);
+  //instruments
+  mainTheme = Clave().play( Rndf(1500, 5000), 1/16 );
+  kicker = Kick().play( 55, 1/4 );
+  drums = EDrums('x*o*x*o-');
+  drums.stop();
+  follow = Follow( kicker);
+  play = new Predator(100, 100, 5, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, playImg, SHIFT, 40, drums);
   antelope = new Prey(random(0, 1000), random(0, 100), noteImg, 50);
   zebra = new Prey(random(0, 1000), random(0, 100), noteImg, 60);
   bee = new Prey(random(0, 1000), random(0, 100), noteImg, 10);
@@ -44,7 +56,7 @@ function preload(){
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
   // Clear the background to black
-  background(0);
+  background(follow.getValue() * 255,0,0);
 
   // Handle input for the tiger
   play.handleInput();

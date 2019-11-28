@@ -120,6 +120,8 @@ class Predator {
     let d = dist(this.x, this.y, prey.x, prey.y);
     // Check if the distance is less than their two radii (an overlap)
     if (d < this.radius + prey.radius) {
+
+
       // Increase predator health and constrain it to its possible range
       this.health += this.healthGainPerEat;
       this.health = constrain(this.health, 5, this.maxHealth);
@@ -127,10 +129,26 @@ class Predator {
       prey.health -= this.healthGainPerEat;
       // Check if the prey died and reset it, also plays a simple snare beat when eaten
       if (prey.health < 5) {
+
+        //Each intrument is tied to a number. Each time you strike a note, a random number will generate, and every number is tied to an instrument.
+        if(prey.soundChoice ===1){
+          console.log("note 1")
+            prey.noteSound.play( 55, 1/4 );
+        }
+        if(prey.soundChoice ===2){
+          console.log("note 2")
+            prey.noteSound.play( "o" );
+        }
+        if (prey.soundChoice ===3) {
+            prey.noteSound.play(Rndf(1500, 5000), 1/16);
+          console.log("note3");
+        }
         prey.reset();
-        this.drums.play("o");
+      //  this.drums.play("o");
         background(255);
         console.log("Eaten!");
+
+
       }
     }
   }

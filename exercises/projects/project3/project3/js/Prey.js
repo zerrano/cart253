@@ -10,7 +10,7 @@ class Prey {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, preyImg, radius) {
+  constructor(x, y, preyImg, radius,soundChoice) {
     // Position
     this.x = x;
     this.y = y;
@@ -26,6 +26,22 @@ class Prey {
     // Display properties
     this.preyImg = preyImg;
     this.radius = this.health;
+    this.soundChoice = soundChoice;
+
+    //each instrument is attached to a number. Everytime a note is consumed, a random number will generate, and will play the respective instrument
+    if(this.soundChoice ==1){
+      this.noteSound = Kick();
+
+    }
+    if(this.soundChoice ==2){
+        this.noteSound = EDrums('x*o*x*o-');
+        this.noteSound.stop();
+    }
+    if (this.soundChoice ==3) {
+        this.noteSound = Clave();
+
+    }
+    //this.noteSound = noteSound;
   }
 
   // move
@@ -78,7 +94,7 @@ class Prey {
   // and radius back to default
   reset() {
     // Random position
-    this.x = random(0, width);
+    this.x = random(800, 1000);
     this.y = random(0, height);
     // Default health
     this.health = this.maxHealth;

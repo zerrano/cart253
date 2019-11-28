@@ -24,7 +24,7 @@ class Predator {
     this.maxHealth = radius;
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
     this.healthLossPerMove = 0.1;
-    this.healthGainPerEat = 3;
+    this.healthGainPerEat = 8;
     // Display properties
     this.predatorImg = predatorImg;
     this.radius = this.health; // Radius is defined in terms of health

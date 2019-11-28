@@ -1,4 +1,4 @@
-// Pop Stream!
+// Beat Saver!
 // by Timothy Serrano
 //
 // Welcome to Pop Stream! The game where you save the lost musical notes!
@@ -22,6 +22,9 @@ let bee;
 let playImg;
 let noteImg;
 
+//welcome screen image
+let welcomeImg;
+
 //gibber music
 let mainTheme;
 let kicker;
@@ -29,6 +32,7 @@ let drums;
 let follow;
 let rhodes;
 
+let state = "WELCOME";
 // setup()
 //
 // Sets up a canvas
@@ -59,11 +63,43 @@ function setup() {
 function preload(){
   playImg = loadImage("assets/images/play.png");
   noteImg = loadImage("assets/images/note.png");
+  welcomeImg = loadImage("assets/images/welcome.png");
 }
 // draw()
 //
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
+
+  if (state === "WELCOME"){
+    welcomePage(); //shows our welcome screen
+  }
+
+  else if (state === "GAME"){
+    mainGame(); //loads in the main game once left mouse click
+  }
+
+}
+
+//Our switch controller for starting the game from left mouse clicking on the greeting screen
+function mousePressed() {
+  if (state === "WELCOME") {
+    // If we were on the title we need to switch to instructions
+    state = "GAME";
+  }
+  else if (state === "GAME") {
+    // If we were on the instructions we need to switch to the game itself
+    state = "GAME";
+  }
+}
+
+//our greeting screen
+function welcomePage() {
+  background (welcomeImg);
+
+  
+}
+
+function mainGame() {
   // Clear the background to black
   background(follow.getValue() * 255,0,0);
 

@@ -41,6 +41,10 @@ class Prey {
         this.noteSound = Clave();
 
     }
+    if (this.soundChoice ==4) {
+      this.noteSound = Hat();
+
+    }
     //this.noteSound = noteSound;
   }
 

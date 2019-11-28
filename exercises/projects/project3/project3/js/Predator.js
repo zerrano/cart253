@@ -143,6 +143,10 @@ class Predator {
             prey.noteSound.play(Rndf(1500, 5000), 1/16);
           console.log("note3");
         }
+        if (prey.soundChoice ===4) {
+            prey.noteSound.play(Rndi(1000, 11025), 1/8);
+          console.log("note4");
+        }
         prey.reset();
       //  this.drums.play("o");
         background(255);

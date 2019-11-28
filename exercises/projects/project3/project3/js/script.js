@@ -9,13 +9,14 @@
 // I will be working off of the predator/prey code that we worked on in class for this project.
 
 
-// Our predator
+// Our play button
 let play;
 
-// The three prey
+// The notes
 let note1;
 let note2;
 let note3;
+let note4;
 
 //our predator images
 
@@ -32,7 +33,8 @@ let drums;
 let follow;
 let rhodes;
 
-let point;
+let soundPlaying = false;
+let point =0;
 //what screen the game will start on when first opened on a browser
 let state = "WELCOME";
 // setup()
@@ -43,28 +45,33 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   //instruments
 
+  //Mono('easyfx')
+  //.note.seq( Rndi(0,12), [1/4,1/8,1/2,1,2].rnd( 1/8,4 ) )
+  //Mono('bass').note.seq( [0,7], 1/8 )
+  FM('bass')
+    .note.seq( [0,0,0,7,14,13].rnd(), [1/8,1/16].rnd(1/16,2) )
   //FM().play( Rndi(100,1000), 1/4 )
-  Pluck().play( Rndi(100,1000), 1/4 )
-
-  RingMod({ amp: 1, frequency:440 })
-
+  //Pluck().play( Rndi(100,1000), 1/4 )
+  Hat().play( Rndi(1000, 11025), 1/8 )
+  //Tom().play( Rndf(50, 300), 1/8 )
+  //Cowbell().play( Rndf(1500, 14100), 1/2 )
   //clave/knee slapper instrument
   //mainTheme = Clave().play( Rndf(1500, 5000), 1/16 );
   //kicker
-  kicker = Kick().play( 55, 1/4 );
-  kicker = Kick();
+  //kicker = Kick().play( 55, 1/4 );
+  //kicker = Kick();
   //synth chords
-  rhodes = Synth( 'rhodes', {amp:.35} )
+  rhodes = Synth( 'rhodes', {amp:.45} )
     .chord.seq( Rndi(0,6,3), 1 )
     .fx.add( Delay() )
 
   drums=  EDrums('x*o*x*o-');
   follow = Follow( drums);
   play = new Predator(100, 100, 5, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, playImg, SHIFT, 40, drums);
-  note1 = new Prey(random(800, 1000), random(0, 100), noteImg, 50,1);
-  note2 = new Prey(random(800, 1000), random(0, 100), noteImg, 50,2);
-  note3 = new Prey(random(800, 1000), random(0, 100), noteImg, 50,3);
-
+  note1 = new Prey(random(800, 1000), random(0, 100), noteImg, 80,1);
+  note2 = new Prey(random(800, 1000), random(0, 100), noteImg, 80,2);
+  note3 = new Prey(random(800, 1000), random(0, 100), noteImg, 80,3);
+  note4 = new Prey(random(800, 1000), random(0, 100), noteImg, 80,4);
 }
 
 function preload(){
@@ -136,34 +143,40 @@ function mainGame() {
   note1.move();
   note2.move();
   note3.move();
+  note4.move();
 
   // Handle the tiger eating any of the prey
   play.handleEating(note1);
   play.handleEating(note2);
   play.handleEating(note3);
+  play.handleEating(note4);
 
   // Display all the "animals"
   play.display();
   note1.display();
   note2.display();
   note3.display();
+  note4.display();
 
-  if(note1.health === 0){
+ console.log(point);
+  if(note1.health <=8){
     point = point +1;
     console.log("score!");
   }
 
-  if(note2.health === 0){
-    point = point +1;
-    console.log("score!");
-  }
-
-  if(note3.health === 0){
-    point = point +1;
-    console.log("score!");
-  }
-
-  if (point === 5) {
-    Synth({ attack:44, decay:44100 }).play( Rndi(100,1000), 1/2 )
-  }
+  // if(note2.radius <= 3){
+  //   point = point +1;
+  //   console.log("score!");
+  // }
+  //
+  // if(note3.radius <= 3){
+  //   point = point +1;
+  //   console.log("score!");
+  // }
+  //
+   if (point === 5 && soundPlaying ===false) {
+     soundPlaying =true;
+    console.log("in side");
+    Mono('bass').note.seq( [0,7], 1/8 )
+   }
 }

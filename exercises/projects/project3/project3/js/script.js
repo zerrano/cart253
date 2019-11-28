@@ -92,11 +92,31 @@ function mousePressed() {
   }
 }
 
+//boolean for our Click to Start button
+let start=0;
 //our greeting screen
 function welcomePage() {
   background (welcomeImg);
 
-  
+  start = start + 1
+
+  // every 10th time, the condition is true
+  if (start % 10 === 0){
+    // fill with 50
+    fill(255);
+    textSize(40);
+  	text("Click to Start!", width/2-100, 400);
+  } else {
+    // all the otehr times, fill with 255
+    fill(0,0,255);
+    textSize(40);
+  	text("Click to Start!", width/2-100, 400);
+  }
+  fill(255);
+  textSize(20);
+  text("You are the all-mighty play button. You are on a mission to save all lost music notes!", width/2-350, 600);
+  text("Everytime you strike a note, you consume it, and release the music trapped inside.", width/2-350, 620);
+  text("String together a musical masterpiece!", width/2-180, 640);
 }
 
 function mainGame() {

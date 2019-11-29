@@ -34,7 +34,7 @@ let follow;
 let rhodes;
 
 let soundPlaying = false;
-let point =0;
+let point = 0;
 //what screen the game will start on when first opened on a browser
 let state = "WELCOME";
 // setup()
@@ -43,16 +43,13 @@ let state = "WELCOME";
 // Creates objects for the predator and three prey
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  //instruments
+  //Unused Instruments
 
   //Mono('easyfx')
   //.note.seq( Rndi(0,12), [1/4,1/8,1/2,1,2].rnd( 1/8,4 ) )
   //Mono('bass').note.seq( [0,7], 1/8 )
-  FM('bass')
-    .note.seq( [0,0,0,7,14,13].rnd(), [1/8,1/16].rnd(1/16,2) )
   //FM().play( Rndi(100,1000), 1/4 )
   //Pluck().play( Rndi(100,1000), 1/4 )
-  Hat().play( Rndi(1000, 11025), 1/8 )
   //Tom().play( Rndf(50, 300), 1/8 )
   //Cowbell().play( Rndf(1500, 14100), 1/2 )
   //clave/knee slapper instrument
@@ -61,20 +58,28 @@ function setup() {
   //kicker = Kick().play( 55, 1/4 );
   //kicker = Kick();
   //synth chords
-  rhodes = Synth( 'rhodes', {amp:.45} )
-    .chord.seq( Rndi(0,6,3), 1 )
-    .fx.add( Delay() )
 
-  drums=  EDrums('x*o*x*o-');
-  follow = Follow( drums);
+  Hat().play(Rndi(1000, 11025), 1 / 8)
+
+  FM('bass')
+    .note.seq([0, 0, 0, 7, 14, 13].rnd(), [1 / 8, 1 / 16].rnd(1 / 16, 2))
+
+  rhodes = Synth('rhodes', {
+      amp: .45
+    })
+    .chord.seq(Rndi(0, 6, 3), 1)
+    .fx.add(Delay())
+
+  drums = EDrums('x*o*x*o-');
+  follow = Follow(drums);
   play = new Predator(100, 100, 5, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, playImg, SHIFT, 40, drums);
-  note1 = new Prey(random(800, 1000), random(0, 100), noteImg, 80,1);
-  note2 = new Prey(random(800, 1000), random(0, 100), noteImg, 80,2);
-  note3 = new Prey(random(800, 1000), random(0, 100), noteImg, 80,3);
-  note4 = new Prey(random(800, 1000), random(0, 100), noteImg, 80,4);
+  note1 = new Prey(random(800, 1000), random(0, 100), noteImg, 80, 1);
+  note2 = new Prey(random(800, 1000), random(0, 100), noteImg, 80, 2);
+  note3 = new Prey(random(800, 1000), random(0, 100), noteImg, 80, 3);
+  note4 = new Prey(random(800, 1000), random(0, 100), noteImg, 80, 4);
 }
 
-function preload(){
+function preload() {
   playImg = loadImage("assets/images/play.png");
   noteImg = loadImage("assets/images/note.png");
   welcomeImg = loadImage("assets/images/welcome.png");
@@ -84,11 +89,9 @@ function preload(){
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
 
-  if (state === "WELCOME"){
+  if (state === "WELCOME") {
     welcomePage(); //shows our welcome screen
-  }
-
-  else if (state === "GAME"){
+  } else if (state === "GAME") {
     mainGame(); //loads in the main game once left mouse click
   }
 
@@ -99,41 +102,40 @@ function mousePressed() {
   if (state === "WELCOME") {
     // If we were on the title we need to switch to instructions
     state = "GAME";
-  }
-  else if (state === "GAME") {
+  } else if (state === "GAME") {
     // If we were on the instructions we need to switch to the game itself
     state = "GAME";
   }
 }
 
 //boolean for our Click to Start button
-let start=0;
+let start = 0;
 //our greeting screen
 function welcomePage() {
-  background (welcomeImg);
+  background(welcomeImg);
 
   //simple boolean to make our Click to Play button, blink
   start = start + 1;
 
-  if (start % 10 === 0){
+  if (start % 10 === 0) {
     fill(255);
     textSize(40);
-  	text("Click to Start!", width/2-100, 400);
+    text("Click to Start!", width / 2 - 100, 400);
   } else {
-    fill(0,0,255);
+    fill(0, 0, 255);
     textSize(40);
-  	text("Click to Start!", width/2-100, 400);
+    text("Click to Start!", width / 2 - 100, 400);
   }
   fill(255);
   textSize(20);
-  text("You are the all-mighty play button. You are on a mission to save all lost music notes!", width/2-350, 600);
-  text("Everytime you strike a note, you consume it, and release the music trapped inside.", width/2-350, 620);
-  text("Press SHIFT to speed up. String together a musical masterpiece! **THERE IS SOUND**", width/2-370, 640);
+  text("You are the all-mighty play button. You are on a mission to save all lost music notes!", width / 2 - 350, 600);
+  text("Everytime you strike a note, you consume it, and release the music trapped inside.", width / 2 - 350, 620);
+  text("Press SHIFT to speed up. String together a musical masterpiece! **THERE IS SOUND**", width / 2 - 370, 640);
 }
 
 function mainGame() {
   // Clear the background to black
-  background(follow.getValue() * 255,0,0);
+  background(follow.getValue() * 255, 0, 0);
 
   // Handle input for the tiger
   play.handleInput();
@@ -158,9 +160,9 @@ function mainGame() {
   note3.display();
   note4.display();
 
- console.log(point);
-  if(note1.health <=8){
-    point = point +1;
+  console.log(point);
+  if (note1.health <= 8) {
+    point = point + 1;
     console.log("score!");
   }
 
@@ -174,9 +176,9 @@ function mainGame() {
   //   console.log("score!");
   // }
   //
-   if (point === 5 && soundPlaying ===false) {
-     soundPlaying =true;
+  if (point === 5 && soundPlaying === false) {
+    soundPlaying = true;
     console.log("in side");
-    Mono('bass').note.seq( [0,7], 1/8 )
-   }
+    Mono('bass').note.seq([0, 7], 1 / 8)
+  }
 }

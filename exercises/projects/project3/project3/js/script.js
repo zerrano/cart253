@@ -160,23 +160,26 @@ function mainGame() {
   note3.display();
   note4.display();
 
+  //point system
+  text("You saved "+ point+ " notes!", windowWidth/2, 50);
+
   console.log(point);
   if (note1.health <= 8) {
     point = point + 1;
     console.log("score!");
   }
 
-  // if(note2.radius <= 3){
-  //   point = point +1;
-  //   console.log("score!");
-  // }
-  //
-  // if(note3.radius <= 3){
-  //   point = point +1;
-  //   console.log("score!");
-  // }
-  //
-  if (point === 5 && soundPlaying === false) {
+  if(note2.health <= 8){
+     point = point +1;
+     console.log("score!");
+   }
+
+   if(note3.radius <= 8){
+     point = point +1;
+     console.log("score!");
+   }
+  //If you score more than 10 points, throw in a new beat
+  if (point === 10 && soundPlaying === false) {
     soundPlaying = true;
     console.log("in side");
     Mono('bass').note.seq([0, 7], 1 / 8)

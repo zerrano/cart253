@@ -4,13 +4,13 @@
 // on screen based on a noise() function. It can move around
 // the screen and be consumed by Predator objects.
 
-class Prey {
+class Enemy {
 
   // constructor
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, preyImg, trigger,soundChoice) {
+  constructor(x, y, enemyImg, trigger) {
     // Position
     this.x = x;
     this.y = y;
@@ -24,28 +24,8 @@ class Prey {
     this.trigger =true;
     // this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
     // Display properties
-    this.preyImg = preyImg;
+    this.enemyImg = enemyImg;
     this.radius = 70;
-    this.soundChoice = soundChoice;
-
-    //each instrument is attached to a number. Everytime a note is consumed, a random number will generate, and will play the respective instrument
-    if(this.soundChoice ==1){
-      this.noteSound = Kick();
-
-    }
-    if(this.soundChoice ==2){
-        this.noteSound = EDrums('x*o*x*o-');
-        this.noteSound.stop();
-    }
-    if (this.soundChoice ==3) {
-        this.noteSound = Clave();
-
-    }
-    if (this.soundChoice ==4) {
-      this.noteSound = Hat();
-
-    }
-    //this.noteSound = noteSound;
   }
 
   // move
@@ -89,7 +69,7 @@ class Prey {
     push();
     noStroke();
     // this.health = true;
-    image(this.preyImg, this.x, this.y, 70, 70);
+    image(this.enemyImg, this.x, this.y, 70, 70);
     pop();
   }
 

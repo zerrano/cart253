@@ -55,7 +55,7 @@ class Predator {
     }
     //sprint feature
     if (keyIsDown(this.shiftKey)) {
-      this.speed = this.speed + 0.2;
+      this.speed = this.speed + 0.8;
       this.speed = constrain(this.speed, this.oSpeed, this.oSpeed+11);
     }
     else {
@@ -113,16 +113,12 @@ class Predator {
       //if collided, erase, and reset prey position
       prey.trigger = false;
 
-      this.health += 3;
+      this.health += 4;
       console.log(prey.trigger);
-      // // Increase predator health and constrain it to its possible range
-      // this.health += this.healthGainPerEat;
-      // this.health = constrain(this.health, 5, this.maxHealth);
-      // // Decrease prey health by the same amount
-      // prey.health -= this.healthGainPerEat;
+
       // Check if the prey died and reset it, also plays a simple snare beat when eaten
       if (prey.trigger === false ) {
-      
+
         //Each intrument is tied to a number. Each time you strike a note, a random number will generate, and every number is tied to an instrument.
         if(prey.soundChoice ===1){
           console.log("note 1")

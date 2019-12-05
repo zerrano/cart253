@@ -23,9 +23,13 @@ let note4;
 let playImg;
 let noteImg;
 
-//welcome/gameover screen image
+//our enemy image
+let enemyImg;
+
+//welcome/victory/gameover screen image
 let welcomeImg;
 let gameOverImg;
+let victoryImg;
 
 //gibber music
 let mainTheme;
@@ -34,12 +38,17 @@ let drums;
 let follow;
 let rhodes;
 
+//milestone music players
 let soundPlaying = false;
 let soundPlaying2 = false;
 let soundPlaying3 = false;
 
 //notes array
 let notes = [];
+let mute = [];
+
+//boolean for our Click to Start button
+let start = 0;
 let point = 0;
 //what screen the game will start on when first opened on a browser
 let state = "WELCOME";
@@ -62,25 +71,29 @@ function setup() {
   //clave/knee slapper instrument
   //mainTheme = Clave().play( Rndf(1500, 5000), 1/16 );
   //kicker
-  //kicker = Kick().play( 55, 1/4 );
+  // kicker = Kick().play( 55, 1/4 );
   //kicker = Kick();
   //synth chords
 
-  Hat().play(Rndi(1000, 11025), 1 / 8)
+   Hat().play(Rndi(1000, 11025), 1 / 8)
 
-  FM('bass')
-    .note.seq([0, 0, 0, 7, 14, 13].rnd(), [1 / 8, 1 / 16].rnd(1 / 16, 2))
+   FM('bass')
+   .note.seq([0, 0, 0, 7, 14, 13].rnd(), [1 / 8, 1 / 16].rnd(1 / 16, 2))
 
-  rhodes = Synth('rhodes', {
+   Synth('rhodes', {
       amp: .45
     })
     .chord.seq(Rndi(0, 6, 3), 1)
-    .fx.add(Delay())
+    // .fx.add(Delay())
 
   drums = EDrums('x*o*x*o-');
   follow = Follow(drums);
-  play = new Predator(100, 100, 8, UP_ARROW, DOWN_ARROW, playImg, SHIFT, 40, drums);
-
+  play = new Predator(100, 100, 12, UP_ARROW, DOWN_ARROW, playImg, SHIFT, 40, drums);
+  //our enemies
+  mute[0] = new Enemy (random(900, 1000), random(0, 100), enemyImg, true);
+  mute[1] = new Enemy (random(900, 1000), random(0, 100), enemyImg, true);
+  mute[2] = new Enemy (random(900, 1000), random(0, 100), enemyImg, true);
+  //our notes
   notes[0] = new Prey(random(800, 1000), random(0, 100), noteImg, true, 1);
   notes[1] = new Prey(random(800, 1000), random(0, 100), noteImg, true, 2);
   notes[2] = new Prey(random(800, 1000), random(0, 100), noteImg, true, 3);
@@ -92,6 +105,8 @@ function preload() {
   noteImg = loadImage("assets/images/note.png");
   welcomeImg = loadImage("assets/images/welcome.png");
   gameOverImg = loadImage("assets/images/gameover.jpg");
+  victoryImg = loadImage("assets/images/victory.jpg");
+  enemyImg = loadImage("assets/images/mute.png");
 }
 // draw()
 //
@@ -104,9 +119,13 @@ function draw() {
     mainGame(); //loads in the main game once left mouse click
   }
 
-  if (state === "GAMEOVER")
+  if (state === "GAMEOVER") {
     gameOver(); //loads in defeat screen
+  }
 
+  if (state === "VICTORY") {
+    victory();//loads in the victory screen
+  }
 }
 //Our switch controller for starting the game from left mouse clicking on the greeting screen
 function mousePressed() {
@@ -117,10 +136,11 @@ function mousePressed() {
     // If we were on the instructions we need to switch to the game itself
     state = "GAME";
   }
+
+
 }
 
-//boolean for our Click to Start button
-let start = 0;
+
 //our greeting screen
 function welcomePage() {
   background(welcomeImg);
@@ -139,21 +159,27 @@ function welcomePage() {
   }
   fill(255);
   textSize(20);
-  text("You are the all-mighty play button. You are on a mission to save all lost music notes!", width / 2 - 350, 600);
+  text("You are the all-mighty play button. You are on a mission to save up to 60 notes!", width / 2 - 350, 600);
   text("Everytime you strike a note, you consume it, and release the music trapped inside.", width / 2 - 350, 620);
   text("Press SHIFT to speed up. Move with the UP Arrow and DOWN Arrow! **THERE IS SOUND**", width / 2 - 370, 640);
 }
 
+//game over screen when player runs out of health
 function gameOver() {
   background(gameOverImg);
 }
 
+//victory screen for when the player reaches 60 points
+function victory() {
+  background(victoryImg);
+}
+
 function mainGame() {
-  // Clear the background to black
+  //background color will pulse according to the values coming from our EDrums
   background(follow.getValue() * 255, 0, 0);
 
   //This will act as the player's healthbar
-  rect(0,30,play.health,10);
+  rect(5,windowHeight/2,play.health,30);
 
   if (play.health === 0) {
     state = "GAMEOVER";
@@ -183,26 +209,37 @@ function mainGame() {
 
   console.log("POINTS:: "+point);
 
-  //If you score more than 20 points, throw in a new beat
-  if (point >= 20 && soundPlaying === false) {
+
+  //If you score more than 15 points, throw in a new beat
+  if (point >= 15 && soundPlaying === false) {
     soundPlaying = true;
-    console.log("in side");
+    console.log("remix2!");
+
     Mono('bass').note.seq([0, 7], 1 / 8)
+
   }
 
-  //if you score more than 40 points, throw in ANOTHER beat
-  if (point >= 40 && soundPlaying2 === false) {
+  //if you score more than 35 points, throw in ANOTHER beat
+  if (point >= 35 && soundPlaying2 === false) {
     soundPlaying2 = true;
-    console.log("in side");
+    console.log("remix3!");
     Pluck().play( Rndi(100,1000), 1/4 )
+
+
   }
 
-  //if you score more than 60 points, throw in ANOTHER beat
-  if (point >= 60 && soundPlaying3 === false) {
+  //if you score more than 50 points, throw in ANOTHER beat
+  if (point >= 50 && soundPlaying3 === false) {
     soundPlaying3 = true;
-    console.log("in side");
+    console.log("remix4!");
     Mono('easyfx')
     .note.seq( Rndi(0,12), [1/4,1/8,1/2,1,2].rnd( 1/8,4 ) )
+
+
+  }
+
+  if (point >= 60) {
+    state = "VICTORY"
   }
 
 }

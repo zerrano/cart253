@@ -34,6 +34,9 @@ let follow;
 let rhodes;
 
 let soundPlaying = false;
+let soundPlaying2 = false;
+let soundPlaying3 = false;
+
 let point = 0;
 //what screen the game will start on when first opened on a browser
 let state = "WELCOME";
@@ -43,8 +46,9 @@ let state = "WELCOME";
 // Creates objects for the predator and three prey
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  //Unused Instruments
 
+  //Unused Instruments
+  //Pluck().play( Rndi(100,1000), 1/8 )
   //Mono('easyfx')
   //.note.seq( Rndi(0,12), [1/4,1/8,1/2,1,2].rnd( 1/8,4 ) )
   //Mono('bass').note.seq( [0,7], 1/8 )
@@ -83,6 +87,7 @@ function preload() {
   playImg = loadImage("assets/images/play.png");
   noteImg = loadImage("assets/images/note.png");
   welcomeImg = loadImage("assets/images/welcome.png");
+  gameOverImg = loadImage("assets/images/gameover.jpg");
 }
 // draw()
 //
@@ -95,8 +100,10 @@ function draw() {
     mainGame(); //loads in the main game once left mouse click
   }
 
-}
+  if (state === "GAMEOVER")
+    gameOver(); //loads in defeat screen
 
+}
 //Our switch controller for starting the game from left mouse clicking on the greeting screen
 function mousePressed() {
   if (state === "WELCOME") {
@@ -133,9 +140,21 @@ function welcomePage() {
   text("Press SHIFT to speed up. String together a musical masterpiece! **THERE IS SOUND**", width / 2 - 370, 640);
 }
 
+function gameOver() {
+  background(245, 90, 66);
+  text("GAME OVER!!", windowWidth/2, windowHeight/2);
+}
+
 function mainGame() {
   // Clear the background to black
   background(follow.getValue() * 255, 0, 0);
+
+  //This will act as the player's healthbar
+  rect(0,30,play.health,10);
+
+  if (play.health === 0) {
+    state = "GAMEOVER"
+  }
 
   // Handle input for the tiger
   play.handleInput();
@@ -164,24 +183,46 @@ function mainGame() {
   text("You saved "+ point+ " notes!", windowWidth/2, 50);
 
   console.log(point);
-  if (note1.health <= 8) {
+
+  if (note1.health <= 10) {
     point = point + 1;
-    console.log("score!");
+    console.log("note1 score!");
   }
 
-  if(note2.health <= 8){
+  if (note2.health <= 10){
      point = point +1;
-     console.log("score!");
+     console.log("note2 score!");
    }
 
-   if(note3.radius <= 8){
+   if(note3.health <= 10 ){
      point = point +1;
-     console.log("score!");
+     console.log("note3 score!");
    }
-  //If you score more than 10 points, throw in a new beat
-  if (point === 10 && soundPlaying === false) {
+
+   if(note4.health <= 10){
+     point = point +1;
+     console.log("note4 score!");
+   }
+  //If you score more than 20 points, throw in a new beat
+  if (point >= 20 && soundPlaying === false) {
     soundPlaying = true;
     console.log("in side");
     Mono('bass').note.seq([0, 7], 1 / 8)
   }
+
+  //if you score more than 40 points, throw in ANOTHER beat
+  if (point >= 40 && soundPlaying2 === false) {
+    soundPlaying2 = true;
+    console.log("in side");
+    Pluck().play( Rndi(100,1000), 1/4 )
+  }
+
+  //if you score more than 60 points, throw in ANOTHER beat
+  if (point >= 60 && soundPlaying3 === false) {
+    soundPlaying3 = true;
+    console.log("in side");
+    Mono('easyfx')
+    .note.seq( Rndi(0,12), [1/4,1/8,1/2,1,2].rnd( 1/8,4 ) )
+  }
+
 }

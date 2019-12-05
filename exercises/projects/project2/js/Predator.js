@@ -141,6 +141,7 @@ class Predator {
       this.health = constrain(this.health, 3, this.maxHealth);
       // Decrease prey health by the same amount
       prey.health -= this.healthGainPerEat;
+
       // Check if the prey died and reset it if so
       if (prey.health < 3) {
         eaten = eaten + 1;

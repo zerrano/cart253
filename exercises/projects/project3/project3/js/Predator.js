@@ -11,7 +11,7 @@ class Predator {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, upKey, downKey, leftKey, rightKey, predatorImg, shiftKey, radius, drums) {
+  constructor(x, y, speed, upKey, downKey, predatorImg, shiftKey, radius, drums) {
     // Position
     this.x = x;
     this.y = y;
@@ -31,8 +31,6 @@ class Predator {
     // Input properties
     this.upKey = upKey;
     this.downKey = downKey;
-    this.leftKey = leftKey;
-    this.rightKey = rightKey;
     //instruments
     this.drums = drums;
     //sprint function
@@ -44,16 +42,7 @@ class Predator {
   // Checks if an arrow key is pressed and sets the predator's
   // velocity appropriately.
   handleInput() {
-    // Horizontal movement
-    if (keyIsDown(this.leftKey)) {
-      this.vx = -this.speed;
-    }
-    else if (keyIsDown(this.rightKey)) {
-      this.vx = this.speed;
-    }
-    else {
-      this.vx = 0;
-    }
+
     // Vertical movement
     if (keyIsDown(this.upKey)) {
       this.vy = -this.speed;
@@ -116,20 +105,24 @@ class Predator {
   // overlaps it. If so, reduces the prey's health and increases
   // the predator's. If the prey dies, it gets reset.
   handleEating(prey) {
+
     // Calculate distance from this predator to the prey
     let d = dist(this.x, this.y, prey.x, prey.y);
     // Check if the distance is less than their two radii (an overlap)
     if (d < this.radius + prey.radius) {
+      //if collided, erase, and reset prey position
+      prey.trigger = false;
 
-
-      // Increase predator health and constrain it to its possible range
-      this.health += this.healthGainPerEat;
-      this.health = constrain(this.health, 5, this.maxHealth);
-      // Decrease prey health by the same amount
-      prey.health -= this.healthGainPerEat;
+      this.health += 3;
+      console.log(prey.trigger);
+      // // Increase predator health and constrain it to its possible range
+      // this.health += this.healthGainPerEat;
+      // this.health = constrain(this.health, 5, this.maxHealth);
+      // // Decrease prey health by the same amount
+      // prey.health -= this.healthGainPerEat;
       // Check if the prey died and reset it, also plays a simple snare beat when eaten
-      if (prey.health < 5) {
-
+      if (prey.trigger === false ) {
+      
         //Each intrument is tied to a number. Each time you strike a note, a random number will generate, and every number is tied to an instrument.
         if(prey.soundChoice ===1){
           console.log("note 1")
@@ -165,7 +158,7 @@ class Predator {
     push();
     noStroke();
     image(this.predatorImg, this.x, this.y, 100, 100);
-    
+
     pop();
   }
 }

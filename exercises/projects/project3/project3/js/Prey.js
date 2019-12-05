@@ -10,7 +10,7 @@ class Prey {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, preyImg, radius,soundChoice) {
+  constructor(x, y, preyImg, trigger,soundChoice) {
     // Position
     this.x = x;
     this.y = y;
@@ -21,11 +21,11 @@ class Prey {
     this.tx = 5; // To make x and y noise different
     this.ty = 0; // we use random starting values
     // Health properties
-    this.maxHealth = radius;
-    this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
+    this.trigger =true;
+    // this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
     // Display properties
     this.preyImg = preyImg;
-    this.radius = this.health;
+    this.radius = 70;
     this.soundChoice = soundChoice;
 
     //each instrument is attached to a number. Everytime a note is consumed, a random number will generate, and will play the respective instrument
@@ -74,6 +74,7 @@ class Prey {
     // Off the left or right
     if (this.x < 0) {
       this.x += width;
+      this.reset();
     }
     else if (this.x > width) {
       this.x -= width;
@@ -87,8 +88,8 @@ class Prey {
   display() {
     push();
     noStroke();
-    this.radius = this.health;
-    image(this.preyImg, this.x, this.y, this.radius, this.radius);
+    // this.health = true;
+    image(this.preyImg, this.x, this.y, 70, 70);
     pop();
   }
 
@@ -97,12 +98,17 @@ class Prey {
   // Set the position to a random location and reset health
   // and radius back to default
   reset() {
+    if(this.trigger ===false){
+        point = point + 1;
+
+    }
+
     // Random position
     this.x = random(800, 1000);
     this.y = random(0, height);
     // Default health
-    this.health = this.maxHealth;
+     this.trigger = true;
     // Default radius
-    this.radius = this.health;
+    this.radius = 70;
   }
 }

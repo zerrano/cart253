@@ -23,8 +23,9 @@ let note4;
 let playImg;
 let noteImg;
 
-//welcome screen image
+//welcome/gameover screen image
 let welcomeImg;
+let gameOverImg;
 
 //gibber music
 let mainTheme;
@@ -37,6 +38,8 @@ let soundPlaying = false;
 let soundPlaying2 = false;
 let soundPlaying3 = false;
 
+//notes array
+let notes = [];
 let point = 0;
 //what screen the game will start on when first opened on a browser
 let state = "WELCOME";
@@ -76,11 +79,12 @@ function setup() {
 
   drums = EDrums('x*o*x*o-');
   follow = Follow(drums);
-  play = new Predator(100, 100, 5, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, playImg, SHIFT, 40, drums);
-  note1 = new Prey(random(800, 1000), random(0, 100), noteImg, 80, 1);
-  note2 = new Prey(random(800, 1000), random(0, 100), noteImg, 80, 2);
-  note3 = new Prey(random(800, 1000), random(0, 100), noteImg, 80, 3);
-  note4 = new Prey(random(800, 1000), random(0, 100), noteImg, 80, 4);
+  play = new Predator(100, 100, 8, UP_ARROW, DOWN_ARROW, playImg, SHIFT, 40, drums);
+
+  notes[0] = new Prey(random(800, 1000), random(0, 100), noteImg, true, 1);
+  notes[1] = new Prey(random(800, 1000), random(0, 100), noteImg, true, 2);
+  notes[2] = new Prey(random(800, 1000), random(0, 100), noteImg, true, 3);
+  notes[3] = new Prey(random(800, 1000), random(0, 100), noteImg, true, 4);
 }
 
 function preload() {
@@ -137,12 +141,11 @@ function welcomePage() {
   textSize(20);
   text("You are the all-mighty play button. You are on a mission to save all lost music notes!", width / 2 - 350, 600);
   text("Everytime you strike a note, you consume it, and release the music trapped inside.", width / 2 - 350, 620);
-  text("Press SHIFT to speed up. String together a musical masterpiece! **THERE IS SOUND**", width / 2 - 370, 640);
+  text("Press SHIFT to speed up. Move with the UP Arrow and DOWN Arrow! **THERE IS SOUND**", width / 2 - 370, 640);
 }
 
 function gameOver() {
-  background(245, 90, 66);
-  text("GAME OVER!!", windowWidth/2, windowHeight/2);
+  background(gameOverImg);
 }
 
 function mainGame() {
@@ -153,7 +156,7 @@ function mainGame() {
   rect(0,30,play.health,10);
 
   if (play.health === 0) {
-    state = "GAMEOVER"
+    state = "GAMEOVER";
   }
 
   // Handle input for the tiger
@@ -161,48 +164,25 @@ function mainGame() {
 
   // Move all the "animals"
   play.move();
-  note1.move();
-  note2.move();
-  note3.move();
-  note4.move();
+  for(let i=0;i<notes.length;i++){
+  notes[i].move();
+  play.handleEating(notes[i]);
+  notes[i].display();
+
+}
 
   // Handle the tiger eating any of the prey
-  play.handleEating(note1);
-  play.handleEating(note2);
-  play.handleEating(note3);
-  play.handleEating(note4);
+
 
   // Display all the "animals"
   play.display();
-  note1.display();
-  note2.display();
-  note3.display();
-  note4.display();
+
 
   //point system
   text("You saved "+ point+ " notes!", windowWidth/2, 50);
 
-  console.log(point);
+  console.log("POINTS:: "+point);
 
-  if (note1.health <= 10) {
-    point = point + 1;
-    console.log("note1 score!");
-  }
-
-  if (note2.health <= 10){
-     point = point +1;
-     console.log("note2 score!");
-   }
-
-   if(note3.health <= 10 ){
-     point = point +1;
-     console.log("note3 score!");
-   }
-
-   if(note4.health <= 10){
-     point = point +1;
-     console.log("note4 score!");
-   }
   //If you score more than 20 points, throw in a new beat
   if (point >= 20 && soundPlaying === false) {
     soundPlaying = true;

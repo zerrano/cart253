@@ -9,8 +9,10 @@
 // I will be working off of the predator/prey code that we worked on in class for this project.
 
 
-// Our play button
+// Our play/pause button
 let play;
+let pause;
+let pauseImg;
 
 // The notes
 let note1;
@@ -87,6 +89,7 @@ function setup() {
 
   //Player
   play = new Predator(50, 50, 12, UP_ARROW, DOWN_ARROW, playImg, SHIFT, 30, drums);
+  pause = new Pause (mouseX, mouseY, pauseImg, 30);
   //our enemy array
   mute[0] = new Enemy(random(900, 1000), random(0, 100), enemyImg, true);
   mute[1] = new Enemy(random(900, 1000), random(0, 100), enemyImg, true);
@@ -108,6 +111,7 @@ function preload() {
   gameOverImg = loadImage("assets/images/gameover.jpg");
   victoryImg = loadImage("assets/images/victory.jpg");
   enemyImg = loadImage("assets/images/mute.png");
+  pauseImg = loadImage ("assets/images/pause.png")
 
 }
 // draw()
@@ -149,14 +153,18 @@ function mousePressed() {
 function instructions () {
 
   background(instructionsImg);
+
+  image(playImg, windowWidth/2-250, 200, 90, 90);
+  image(pauseImg, windowWidth - 250, 200, 90, 90);
   fill(255);
   textSize(20);
   text("THERE IS SOUND. PLEASE WEAR HEADPHONES OR EARPLUGS. Might be loud!", width / 2 - 350, windowHeight/2);
-  text("You are the all-mighty play button. You are on a mission to save up to 60 notes!", width / 2 - 350, windowHeight/2 + 50);
+  text("You are the Play button and Pause button. You're both on a mission to save up to 60 notes!", width / 2 - 350, windowHeight/2 + 50);
   text("Everytime you strike a note, you consume it, and release the music trapped inside.", width / 2 - 350, windowHeight/2 + 80);
-  text("Press SHIFT to speed up. Move with the UP Arrow and DOWN Arrow!", width / 2 - 310, windowHeight/2 + 110);
-  text("Beware of the dreaded MUTE buttons! They are out to kill all sound!", width / 2 - 300, windowHeight/2 + 140);
-  text("The more notes you save, the more background music gets added in!", width / 2 - 300, windowHeight/2 + 170);
+  text("The job of the Pause button is to protect the Play button from the evil Mutes!", width / 2 - 350, windowHeight/2 + 110);
+  text("Press SHIFT to speed up. Move with the UP Arrow and DOWN Arrow!", width / 2 - 310, windowHeight/2 + 140);
+  text("Beware of the dreaded MUTE buttons! They are out to kill all sound!", width / 2 - 300, windowHeight/2 + 170);
+  text("The more notes you save, the more background music gets added in!", width / 2 - 300, windowHeight/2 + 200);
 }
 
 //our greeting screen
@@ -212,6 +220,7 @@ function mainGame() {
 
   // Move all the notes
   play.move();
+  pause.move();
 
   //array for the notes
   for (let i = 0; i < notes.length; i++) {
@@ -223,8 +232,9 @@ function mainGame() {
   // Handle the tiger eating any of the prey
 
 
-  // Display all the "animals"
+  // Display all the players
   play.display();
+  pause.display();
 
 
   //point system
@@ -242,6 +252,7 @@ function mainGame() {
     for (let i = 0; i < mute.length; i++) {
       mute[i].move();
       play.handleEating(mute[i]);
+      pause.handleEating(mute[i]);
       mute[i].display();
     }
   }
@@ -250,6 +261,7 @@ function mainGame() {
     for (let i = 0; i < mute.length; i++) {
       mute[i].move();
       play.handleEating(mute[i]);
+      pause.handleEating(mute[i]);
       mute[i].display();
     }
   }

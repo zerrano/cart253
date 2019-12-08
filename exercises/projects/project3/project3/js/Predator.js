@@ -22,12 +22,10 @@ class Predator {
     this.oSpeed = speed;
     // Health properties
     this.maxHealth = radius;
-    this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
-    this.healthLossPerMove = 0.1;
-    this.healthGainPerEat = 10;
+    this.health = 700; // Must be AFTER defining this.maxHealth
+    this.healthLossPerMove = 1.3;
     // Display properties
     this.predatorImg = predatorImg;
-    this.radius = this.health; // Radius is defined in terms of health
     // Input properties
     this.upKey = upKey;
     this.downKey = downKey;
@@ -73,7 +71,7 @@ class Predator {
     this.y += this.vy;
     // Update health
     this.health = this.health - this.healthLossPerMove;
-    this.health = constrain(this.health, 0, this.maxHealth);
+    this.health = constrain(this.health, 0, 700);
     // Handle wrapping
     this.handleWrapping();
   }
@@ -108,11 +106,11 @@ class Predator {
     // Calculate distance from this predator to the prey
     let d = dist(this.x, this.y, prey.x, prey.y);
     // Check if the distance is less than their two radii (an overlap)
-    if (d < this.radius + prey.radius) {
+    if (d < this.maxHealth + prey.radius) {
       //if collided, erase, and reset prey position
       prey.trigger = false;
 
-      this.health += 4;
+      this.health += 60;
       console.log(prey.trigger);
 
       // Check if the prey died and reset it, also plays a simple snare beat when eaten
@@ -152,7 +150,7 @@ class Predator {
   display() {
     push();
     noStroke();
-    image(this.predatorImg, this.x, this.y, 100, 100);
+    image(this.predatorImg, this.x, this.y, 70, 70);
 
     pop();
   }

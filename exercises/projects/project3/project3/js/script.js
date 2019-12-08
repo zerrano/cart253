@@ -153,6 +153,7 @@ function instructions () {
   text("Everytime you strike a note, you consume it, and release the music trapped inside.", width / 2 - 350, windowHeight/2 + 80);
   text("Press SHIFT to speed up. Move with the UP Arrow and DOWN Arrow!", width / 2 - 310, windowHeight/2 + 110);
   text("Beware of the dreaded MUTE buttons! They are out to kill all sound!", width / 2 - 300, windowHeight/2 + 140);
+  text("The more notes you save, the more background music gets added in!", width / 2 - 300, windowHeight/2 + 170);
 }
 
 //our greeting screen
@@ -188,7 +189,7 @@ function mainGame() {
   background(follow.getValue() * 255, 0, 0);
 
   //This will act as the player's healthbar
-  rect(5, windowHeight / 2, play.health, 30);
+  rect(5, windowHeight -50, play.health, 30);
 
   if (play.health === 0) {
     state = "GAMEOVER";

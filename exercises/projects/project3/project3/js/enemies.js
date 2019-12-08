@@ -24,7 +24,7 @@ class Enemy {
     // this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
     // Display properties
     this.enemyImg = enemyImg;
-    this.radius = 70;
+    this.radius = 45;
   }
 
   // move
@@ -83,6 +83,6 @@ class Enemy {
     // Default health
     this.trigger = true;
     // Default radius
-    this.radius = 70;
+    this.radius = 45;
   }
 }

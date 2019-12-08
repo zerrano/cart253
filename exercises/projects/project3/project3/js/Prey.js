@@ -29,7 +29,7 @@ class Prey {
     // this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
     // Display properties
     this.preyImg = preyImg;
-    this.radius = 70;
+    this.radius = 50;
     this.soundChoice = soundChoice;
 
     //each instrument is attached to a number. Everytime a note is consumed, a random number will generate, and will play the respective instrument
@@ -113,6 +113,6 @@ class Prey {
     // Default health
      this.trigger = true;
     // Default radius
-    this.radius = 70;
+    this.radius = 50;
   }
 }

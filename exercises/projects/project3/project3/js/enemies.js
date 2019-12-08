@@ -1,14 +1,13 @@
-// Prey
-//
-// A class that represents a simple prey that moves
-// on screen based on a noise() function. It can move around
-// the screen and be consumed by Predator objects.
+//The Mute button. The arch nemesis of the play button.
+//Touching the mute button means certain death for the player.
+//The mute button will only spawn after a set amount of points have been collected by the player.
+//Colliding with the mute button will immediately kill the player, so beware.
 
 class Enemy {
 
   // constructor
   //
-  // Sets the initial values for the Predator's properties
+  // Sets the initial values for the Mute's properties
   // Either sets default values or uses the arguments provided
   constructor(x, y, enemyImg, trigger) {
     // Position
@@ -17,11 +16,11 @@ class Enemy {
     // Velocity and speed
     this.vx = 0;
     this.vy = 0;
-    // Time properties for noise() function
+    // Time properties
     this.tx = 5; // To make x and y noise different
     this.ty = 0; // we use random starting values
     // Health properties
-    this.trigger =true;
+    this.trigger = true;
     // this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
     // Display properties
     this.enemyImg = enemyImg;
@@ -30,7 +29,7 @@ class Enemy {
 
   // move
   //
-  // Sets velocity based on the noise() function and the Prey's speed
+  // Sets velocity
   // Moves based on the resulting velocity and handles wrapping
   move() {
     // Set velocity via noise()
@@ -55,16 +54,12 @@ class Enemy {
     if (this.x < 0) {
       this.x += width;
       this.reset();
-    }
-    else if (this.x > width) {
+    } else if (this.x > width) {
       this.x -= width;
     }
   }
 
   // display
-  //
-  // Draw the prey as an ellipse on the canvas
-  // with a radius the same size as its current health.
   display() {
     push();
     noStroke();
@@ -78,16 +73,15 @@ class Enemy {
   // Set the position to a random location and reset health
   // and radius back to default
   reset() {
-    if(this.trigger ===false){
-        point = point + 1;
+    if (this.trigger === false) {
+      state = "GAMEOVER";
 
     }
-
     // Random position
     this.x = random(800, 1000);
     this.y = random(0, height);
     // Default health
-     this.trigger = true;
+    this.trigger = true;
     // Default radius
     this.radius = 70;
   }

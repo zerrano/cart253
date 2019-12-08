@@ -98,7 +98,6 @@ class Predator {
       this.y -= height;
     }
   }
-
   // handleEating
   //
   // Takes a Prey object as an argument and checks if the predator

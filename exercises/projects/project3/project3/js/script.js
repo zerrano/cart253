@@ -59,40 +59,28 @@ let state = "WELCOME";
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  //Unused Instruments
-  //Pluck().play( Rndi(100,1000), 1/8 )
-  //Mono('easyfx')
-  //.note.seq( Rndi(0,12), [1/4,1/8,1/2,1,2].rnd( 1/8,4 ) )
-  //Mono('bass').note.seq( [0,7], 1/8 )
-  //FM().play( Rndi(100,1000), 1/4 )
-  //Pluck().play( Rndi(100,1000), 1/4 )
-  //Tom().play( Rndf(50, 300), 1/8 )
-  //Cowbell().play( Rndf(1500, 14100), 1/2 )
-  //clave/knee slapper instrument
-  //mainTheme = Clave().play( Rndf(1500, 5000), 1/16 );
-  //kicker
-  // kicker = Kick().play( 55, 1/4 );
-  //kicker = Kick();
-  //synth chords
+  //Instruments from the gibber library
 
-   Hat().play(Rndi(1000, 11025), 1 / 8)
+  //Percussion beat
+  Hat().play(Rndi(1000, 11025), 1 / 8)
 
-   FM('bass')
-   .note.seq([0, 0, 0, 7, 14, 13].rnd(), [1 / 8, 1 / 16].rnd(1 / 16, 2))
+  //
+  FM('bass')
+    .note.seq([0, 0, 0, 7, 14, 13].rnd(), [1 / 8, 1 / 16].rnd(1 / 16, 2))
 
-   Synth('rhodes', {
+  Synth('rhodes', {
       amp: .45
     })
     .chord.seq(Rndi(0, 6, 3), 1)
-    // .fx.add(Delay())
+  // .fx.add(Delay())
 
   drums = EDrums('x*o*x*o-');
   follow = Follow(drums);
-  play = new Predator(100, 100, 12, UP_ARROW, DOWN_ARROW, playImg, SHIFT, 40, drums);
+  play = new Predator(50, 50, 12, UP_ARROW, DOWN_ARROW, playImg, SHIFT, 30, drums);
   //our enemies
-  mute[0] = new Enemy (random(900, 1000), random(0, 100), enemyImg, true);
-  mute[1] = new Enemy (random(900, 1000), random(0, 100), enemyImg, true);
-  mute[2] = new Enemy (random(900, 1000), random(0, 100), enemyImg, true);
+  mute[0] = new Enemy(random(900, 1000), random(0, 100), enemyImg, true);
+  mute[1] = new Enemy(random(900, 1000), random(0, 100), enemyImg, true);
+  mute[2] = new Enemy(random(900, 1000), random(0, 100), enemyImg, true);
   //our notes
   notes[0] = new Prey(random(800, 1000), random(0, 100), noteImg, true, 1);
   notes[1] = new Prey(random(800, 1000), random(0, 100), noteImg, true, 2);
@@ -100,6 +88,7 @@ function setup() {
   notes[3] = new Prey(random(800, 1000), random(0, 100), noteImg, true, 4);
 }
 
+//Preloading all of our image assets
 function preload() {
   playImg = loadImage("assets/images/play.png");
   noteImg = loadImage("assets/images/note.png");
@@ -124,7 +113,7 @@ function draw() {
   }
 
   if (state === "VICTORY") {
-    victory();//loads in the victory screen
+    victory(); //loads in the victory screen
   }
 }
 //Our switch controller for starting the game from left mouse clicking on the greeting screen
@@ -159,9 +148,11 @@ function welcomePage() {
   }
   fill(255);
   textSize(20);
+  text("THERE IS SOUND. PLEASE WEAR HEADPHONES OR EARPLUGS. Might be loud!", width / 2 - 350, 560);
   text("You are the all-mighty play button. You are on a mission to save up to 60 notes!", width / 2 - 350, 600);
-  text("Everytime you strike a note, you consume it, and release the music trapped inside.", width / 2 - 350, 620);
-  text("Press SHIFT to speed up. Move with the UP Arrow and DOWN Arrow! **THERE IS SOUND**", width / 2 - 370, 640);
+  text("Everytime you strike a note, you consume it, and release the music trapped inside.", width / 2 - 350, 622);
+  text("Press SHIFT to speed up. Move with the UP Arrow and DOWN Arrow!", width / 2 - 320, 642);
+  text("Beware of the dreaded MUTE buttons! They are out to kill all sound!", width / 2 - 310, 665);
 }
 
 //game over screen when player runs out of health
@@ -179,23 +170,24 @@ function mainGame() {
   background(follow.getValue() * 255, 0, 0);
 
   //This will act as the player's healthbar
-  rect(5,windowHeight/2,play.health,30);
+  rect(5, windowHeight / 2, play.health, 30);
 
   if (play.health === 0) {
     state = "GAMEOVER";
   }
 
-  // Handle input for the tiger
+  // Handle input for the player
   play.handleInput();
 
-  // Move all the "animals"
+  // Move all the notes
   play.move();
-  for(let i=0;i<notes.length;i++){
-  notes[i].move();
-  play.handleEating(notes[i]);
-  notes[i].display();
 
-}
+  //array for the notes
+  for (let i = 0; i < notes.length; i++) {
+    notes[i].move();
+    play.handleEating(notes[i]);
+    notes[i].display();
+  }
 
   // Handle the tiger eating any of the prey
 
@@ -205,10 +197,22 @@ function mainGame() {
 
 
   //point system
-  text("You saved "+ point+ " notes!", windowWidth/2, 50);
+  text("You saved " + point + " notes!", windowWidth / 2, 50);
 
-  console.log("POINTS:: "+point);
+  console.log("POINTS:: " + point);
 
+  if (play.x >= mute.x) {
+    state = "GAMEOVER";
+  }
+
+  //if the player hits points, spawn in the mute buttons
+  if (point >= 10) {
+    for (let i = 0; i < mute.length; i++) {
+      mute[i].move();
+      play.handleEating(mute[i]);
+      mute[i].display();
+    }
+  }
 
   //If you score more than 15 points, throw in a new beat
   if (point >= 15 && soundPlaying === false) {
@@ -223,8 +227,7 @@ function mainGame() {
   if (point >= 35 && soundPlaying2 === false) {
     soundPlaying2 = true;
     console.log("remix3!");
-    Pluck().play( Rndi(100,1000), 1/4 )
-
+    Pluck().play(Rndi(100, 1000), 1 / 4)
 
   }
 
@@ -233,7 +236,7 @@ function mainGame() {
     soundPlaying3 = true;
     console.log("remix4!");
     Mono('easyfx')
-    .note.seq( Rndi(0,12), [1/4,1/8,1/2,1,2].rnd( 1/8,4 ) )
+      .note.seq(Rndi(0, 12), [1 / 4, 1 / 8, 1 / 2, 1, 2].rnd(1 / 8, 4))
 
 
   }

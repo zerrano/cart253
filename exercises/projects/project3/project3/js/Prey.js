@@ -4,6 +4,10 @@
 // on screen based on a noise() function. It can move around
 // the screen and be consumed by Predator objects.
 
+//My version of the prey controls the "Music notes".
+//They move linearly from right to left, and will spawn in a new
+//location when they reach the left side of the canvas.
+
 class Prey {
 
   // constructor
@@ -53,8 +57,8 @@ class Prey {
   // Sets velocity based on the noise() function and the Prey's speed
   // Moves based on the resulting velocity and handles wrapping
   move() {
-    // Set velocity via noise()
-    this.vx = constrain(this.tx, 0, 5.1);
+    // Set velocity
+    this.vx = constrain(this.tx, 0, 6);
     this.vy = constrain(this.ty, 0, 0);
     // Update position
     this.x -= this.vx;
@@ -74,8 +78,8 @@ class Prey {
     // Off the left or right
     if (this.x < 0) {
       this.x += width;
-      this.reset();
-    }
+      this.reset(); //Will spawn in a new Y-Axis lane when they touch
+    }               //the left side of the screen.
     else if (this.x > width) {
       this.x -= width;
     }

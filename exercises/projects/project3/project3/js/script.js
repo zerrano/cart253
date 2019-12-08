@@ -64,24 +64,32 @@ function setup() {
   //Percussion beat
   Hat().play(Rndi(1000, 11025), 1 / 8)
 
-  //
+  //High pitched bass beats
   FM('bass')
     .note.seq([0, 0, 0, 7, 14, 13].rnd(), [1 / 8, 1 / 16].rnd(1 / 16, 2))
 
+  //Synth beats
   Synth('rhodes', {
       amp: .45
     })
-    .chord.seq(Rndi(0, 6, 3), 1)
-  // .fx.add(Delay())
 
+  //Extended chords
+  .chord.seq(Rndi(0, 6, 3), 1)
+  .fx.add(Delay())
+
+  //Drums
   drums = EDrums('x*o*x*o-');
+
+  //Tracker to get value from drum beats, and change background accordingly
   follow = Follow(drums);
+
+  //Player
   play = new Predator(50, 50, 12, UP_ARROW, DOWN_ARROW, playImg, SHIFT, 30, drums);
-  //our enemies
+  //our enemy array
   mute[0] = new Enemy(random(900, 1000), random(0, 100), enemyImg, true);
   mute[1] = new Enemy(random(900, 1000), random(0, 100), enemyImg, true);
   mute[2] = new Enemy(random(900, 1000), random(0, 100), enemyImg, true);
-  //our notes
+  //our notes array
   notes[0] = new Prey(random(800, 1000), random(0, 100), noteImg, true, 1);
   notes[1] = new Prey(random(800, 1000), random(0, 100), noteImg, true, 2);
   notes[2] = new Prey(random(800, 1000), random(0, 100), noteImg, true, 3);

@@ -26,10 +26,11 @@ let noteImg;
 //our enemy image
 let enemyImg;
 
-//welcome/victory/gameover screen image
+//welcome/instructions/victory/gameover screen image
 let welcomeImg;
 let gameOverImg;
 let victoryImg;
+let instructionsImg;
 
 //gibber music
 let mainTheme;
@@ -101,6 +102,7 @@ function preload() {
   playImg = loadImage("assets/images/play.png");
   noteImg = loadImage("assets/images/note.png");
   welcomeImg = loadImage("assets/images/welcome.png");
+  instructionsImg = loadImage("assets/images/instructions.png");
   gameOverImg = loadImage("assets/images/gameover.jpg");
   victoryImg = loadImage("assets/images/victory.jpg");
   enemyImg = loadImage("assets/images/mute.png");
@@ -116,6 +118,10 @@ function draw() {
     mainGame(); //loads in the main game once left mouse click
   }
 
+  if (state === "INSTRUCTIONS"){
+    instructions();//loads in the instructions page
+  }
+
   if (state === "GAMEOVER") {
     gameOver(); //loads in defeat screen
   }
@@ -128,8 +134,8 @@ function draw() {
 function mousePressed() {
   if (state === "WELCOME") {
     // If we were on the title we need to switch to instructions
-    state = "GAME";
-  } else if (state === "GAME") {
+    state = "INSTRUCTIONS";
+  } else if (state === "INSTRUCTIONS") {
     // If we were on the instructions we need to switch to the game itself
     state = "GAME";
   }
@@ -137,6 +143,17 @@ function mousePressed() {
 
 }
 
+function instructions () {
+
+  background(instructionsImg);
+  fill(255);
+  textSize(20);
+  text("THERE IS SOUND. PLEASE WEAR HEADPHONES OR EARPLUGS. Might be loud!", width / 2 - 350, windowHeight/2);
+  text("You are the all-mighty play button. You are on a mission to save up to 60 notes!", width / 2 - 350, windowHeight/2 + 50);
+  text("Everytime you strike a note, you consume it, and release the music trapped inside.", width / 2 - 350, windowHeight/2 + 80);
+  text("Press SHIFT to speed up. Move with the UP Arrow and DOWN Arrow!", width / 2 - 310, windowHeight/2 + 110);
+  text("Beware of the dreaded MUTE buttons! They are out to kill all sound!", width / 2 - 300, windowHeight/2 + 140);
+}
 
 //our greeting screen
 function welcomePage() {
@@ -154,13 +171,6 @@ function welcomePage() {
     textSize(40);
     text("Click to Start!", width / 2 - 100, 400);
   }
-  fill(255);
-  textSize(20);
-  text("THERE IS SOUND. PLEASE WEAR HEADPHONES OR EARPLUGS. Might be loud!", width / 2 - 350, 560);
-  text("You are the all-mighty play button. You are on a mission to save up to 60 notes!", width / 2 - 350, 600);
-  text("Everytime you strike a note, you consume it, and release the music trapped inside.", width / 2 - 350, 622);
-  text("Press SHIFT to speed up. Move with the UP Arrow and DOWN Arrow!", width / 2 - 320, 642);
-  text("Beware of the dreaded MUTE buttons! They are out to kill all sound!", width / 2 - 310, 665);
 }
 
 //game over screen when player runs out of health

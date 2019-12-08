@@ -53,6 +53,7 @@ let start = 0;
 let point = 0;
 //what screen the game will start on when first opened on a browser
 let state = "WELCOME";
+
 // setup()
 //
 // Sets up a canvas
@@ -97,8 +98,9 @@ function setup() {
   notes[3] = new Prey(random(800, 1000), random(0, 100), noteImg, true, 4);
 }
 
-//Preloading all of our image assets
+//Preloading all of our image/sound assets
 function preload() {
+  //images
   playImg = loadImage("assets/images/play.png");
   noteImg = loadImage("assets/images/note.png");
   welcomeImg = loadImage("assets/images/welcome.png");
@@ -106,6 +108,7 @@ function preload() {
   gameOverImg = loadImage("assets/images/gameover.jpg");
   victoryImg = loadImage("assets/images/victory.jpg");
   enemyImg = loadImage("assets/images/mute.png");
+
 }
 // draw()
 //
@@ -179,11 +182,14 @@ function gameOver() {
   background(gameOverImg);
 }
 
+
 //victory screen for when the player reaches 60 points
 function victory() {
   background(victoryImg);
 }
 
+
+//Where all the magic happens
 function mainGame() {
   //background color will pulse according to the values coming from our EDrums
   background(follow.getValue() * 255, 0, 0);
@@ -191,6 +197,12 @@ function mainGame() {
   //This will act as the player's healthbar
   rect(5, windowHeight -50, play.health, 30);
 
+  //On screen instructions
+  fill(255);
+  textSize(30);
+  text("↑", 10, 50);
+  text ("↓", 10, 600);
+  //Lose conditions
   if (play.health === 0) {
     state = "GAMEOVER";
   }
@@ -216,6 +228,7 @@ function mainGame() {
 
 
   //point system
+  textSize(20);
   text("You saved " + point + " notes!", windowWidth / 2, 50);
 
   console.log("POINTS:: " + point);
@@ -226,6 +239,14 @@ function mainGame() {
 
   //if the player hits points, spawn in the mute buttons
   if (point >= 10) {
+    for (let i = 0; i < mute.length; i++) {
+      mute[i].move();
+      play.handleEating(mute[i]);
+      mute[i].display();
+    }
+  }
+
+  if (point >= 40) {
     for (let i = 0; i < mute.length; i++) {
       mute[i].move();
       play.handleEating(mute[i]);
